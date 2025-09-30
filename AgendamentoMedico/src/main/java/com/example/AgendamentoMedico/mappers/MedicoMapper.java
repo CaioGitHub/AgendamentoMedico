@@ -11,23 +11,25 @@ import java.util.stream.Collectors;
 public class MedicoMapper {
 
     public static MedicoResponseDTO toResponseDTO(Medico medico) {
-        return new MedicoResponseDTO(
-                medico.getNome(),
-                medico.getCrm(),
-                medico.getEndereco(),
-                medico.getEspecialidades()
-                        .stream()
-                        .map(Especialidade::getNome)
-                        .collect(Collectors.toList())
-        );
+        return MedicoResponseDTO.builder()
+                .nome(medico.getNome())
+                .crm(medico.getCrm())
+                .endereco(medico.getEndereco())
+                .especialidades(
+                        medico.getEspecialidades()
+                                .stream()
+                                .map(Especialidade::getNome)
+                                .collect(Collectors.toList())
+                )
+                .build();
     }
 
     public static Medico toEntity(MedicoRequestDTO dto, List<Especialidade> especialidades) {
-        Medico medico = new Medico();
-        medico.setNome(dto.getNome());
-        medico.setCrm(dto.getCrm());
-        medico.setEndereco(dto.getEndereco());
-        medico.setEspecialidades(especialidades);
-        return medico;
+        return Medico.builder()
+                .nome(dto.getNome())
+                .crm(dto.getCrm())
+                .endereco(dto.getEndereco())
+                .especialidades(especialidades)
+                .build();
     }
 }
