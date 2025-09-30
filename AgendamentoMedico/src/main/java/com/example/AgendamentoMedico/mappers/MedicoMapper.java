@@ -1,6 +1,7 @@
 package com.example.AgendamentoMedico.mappers;
 
-import com.example.AgendamentoMedico.dtos.MedicoDTO;
+import com.example.AgendamentoMedico.dtos.MedicoRequestDTO;
+import com.example.AgendamentoMedico.dtos.MedicoResponseDTO;
 import com.example.AgendamentoMedico.models.Especialidade;
 import com.example.AgendamentoMedico.models.Medico;
 
@@ -9,9 +10,8 @@ import java.util.stream.Collectors;
 
 public class MedicoMapper {
 
-    public static MedicoDTO toDTO(Medico medico) {
-        return new MedicoDTO(
-                medico.getId(),
+    public static MedicoResponseDTO toResponseDTO(Medico medico) {
+        return new MedicoResponseDTO(
                 medico.getNome(),
                 medico.getCrm(),
                 medico.getEndereco(),
@@ -22,12 +22,12 @@ public class MedicoMapper {
         );
     }
 
-    public static Medico toEntity(MedicoDTO dto, List<Especialidade> especialidades) {
-        return Medico.builder()
-                .nome(dto.getNome())
-                .crm(dto.getCrm())
-                .endereco(dto.getEndereco())
-                .especialidades(especialidades)
-                .build();
+    public static Medico toEntity(MedicoRequestDTO dto, List<Especialidade> especialidades) {
+        Medico medico = new Medico();
+        medico.setNome(dto.getNome());
+        medico.setCrm(dto.getCrm());
+        medico.setEndereco(dto.getEndereco());
+        medico.setEspecialidades(especialidades);
+        return medico;
     }
 }
