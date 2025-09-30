@@ -3,7 +3,6 @@ package com.example.AgendamentoMedico.models;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
-import com.example.AgendamentoMedico.models.Especialidade;
 
 @Entity
 @Data
@@ -31,5 +30,5 @@ public class Medico {
         joinColumns = @JoinColumn(name = "medico_id"),
         inverseJoinColumns = @JoinColumn(name = "especialidade_id")
     )
-    private List<Especialidade> especialidades;
+    private List<Especialidade> especialidade;
 }

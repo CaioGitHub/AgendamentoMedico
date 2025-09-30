@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="JpaBuddyIdeaProjectConfig" newRepositoryParent="org.springframework.data.repository.Repository">
+=======
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="defaultUnitInitialized" value="true" />
+>>>>>>> 2a4efbc (feature: criando o layout)
     <option name="renamerInitialized" value="true" />
   </component>
 </project>
