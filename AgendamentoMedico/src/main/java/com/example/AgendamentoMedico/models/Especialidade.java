@@ -3,6 +3,8 @@ package com.example.AgendamentoMedico.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,6 +19,9 @@ public class Especialidade {
     @Column(nullable=false, unique=true)
     private String nome;
 
+    @ManyToMany(mappedBy = "especialidades")
+    private List<Medico> medicos;
+    
     @Override
     public String toString() {
         return "Especialidade{" +

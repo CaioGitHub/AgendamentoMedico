@@ -1,6 +1,7 @@
 package com.example.AgendamentoMedico.services;
 
 import com.example.AgendamentoMedico.dtos.EspecialidadeDTO;
+import com.example.AgendamentoMedico.exceptions.ResourceNotFoundException;
 import com.example.AgendamentoMedico.mappers.EspecialidadeMapper;
 import com.example.AgendamentoMedico.models.Especialidade;
 import com.example.AgendamentoMedico.repositories.EspecialidadeRepository;
@@ -28,6 +29,16 @@ public class EspecialidadeService {
 
     public Optional<EspecialidadeDTO> buscarPorId(Long id) {
         return repository.findById(id).map(EspecialidadeMapper::toDTO);
+    }
+
+    public List<Especialidade> buscarPorIds(List<Long> ids) {
+        List<Especialidade> especialidades = repository.findAllById(ids);
+
+        if (especialidades.size() != ids.size()) {
+            throw new ResourceNotFoundException("Algumas especialidades não foram encontradas.");
+        }
+
+        return especialidades;
     }
 
     public EspecialidadeDTO salvar(EspecialidadeDTO dto) {
