@@ -21,4 +21,5 @@ public class Convenio {
     private String cobertura;
 
     private String telefoneContato;
+
 }
