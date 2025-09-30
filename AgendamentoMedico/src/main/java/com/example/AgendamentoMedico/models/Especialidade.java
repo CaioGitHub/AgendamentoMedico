@@ -1,7 +1,6 @@
 package com.example.AgendamentoMedico.models;
 
 import jakarta.persistence.*;
-import jdk.jshell.Snippet;
 import lombok.*;
 
 import java.util.List;

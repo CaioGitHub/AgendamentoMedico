@@ -3,6 +3,7 @@ package com.example.AgendamentoMedico.models;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
+import com.example.AgendamentoMedico.models.Especialidade;
 
 @Entity
 @Data
