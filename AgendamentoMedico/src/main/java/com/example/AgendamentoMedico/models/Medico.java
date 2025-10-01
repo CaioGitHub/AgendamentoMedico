@@ -3,6 +3,7 @@ package com.example.AgendamentoMedico.models;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
+import com.example.AgendamentoMedico.models.Especialidade;
 
 @Entity
 @Data
@@ -24,7 +25,11 @@ public class Medico {
     @Column(nullable=false)
     private String endereco;
 
-    @ManyToOne
-    @JoinColumn(name="especialidade_id", nullable=false)
-    private List<Especialidade> especialidade;
+    @ManyToMany
+    @JoinTable(
+        name = "medico_especialidade",
+        joinColumns = @JoinColumn(name = "medico_id"),
+        inverseJoinColumns = @JoinColumn(name = "especialidade_id")
+    )
+    private List<Especialidade> especialidades;
 }
