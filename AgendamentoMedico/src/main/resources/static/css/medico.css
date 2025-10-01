@@ -167,3 +167,17 @@ input::placeholder {
         height: auto;
     }
 }
+
+.list-header{
+          display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:.75rem
+        }
+        .filter-bar{min-width:42%}
+        .filter-bar label{display:block;margin-bottom:.35rem;font-size:.9rem;color:#e0e0e0}
+        .filter-bar select{
+          width:100%;padding:.7rem .9rem;border:none;border-radius:10px;outline:none;
+          background:rgba(255,255,255,.2);color:#fff
+        }
+        @media (max-width: 900px){
+          .list-header{flex-direction:column;align-items:stretch}
+          .filter-bar{min-width:100%}
+        }

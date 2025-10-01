@@ -25,9 +25,9 @@ public class MedicoController {
     @GetMapping
     public ResponseEntity<Page<MedicoResponseDTO>> listarTodos(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size
-    ) {
-        return ResponseEntity.ok(medicoService.listarPaginado(page, size));
+            @RequestParam(defaultValue = "4") int size) {
+
+        return ResponseEntity.ok(medicoService.listarTodos(page, size));
     }
 
     @GetMapping("/{id}")
@@ -40,12 +40,12 @@ public class MedicoController {
     }
 
     @GetMapping("/especialidade/{especialidade}")
-    public ResponseEntity<Page<MedicoResponseDTO>> buscarPorEspecialidade(
+    public ResponseEntity<Page<MedicoResponseDTO>> listarPorEspecialidade(
             @PathVariable String especialidade,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size
-    ) {
-        return ResponseEntity.ok(medicoService.buscarPorEspecialidade(especialidade, page, size));
+            @RequestParam(defaultValue = "4") int size) {
+
+        return ResponseEntity.ok(medicoService.listarPorEspecialidade(especialidade, page, size));
     }
 
     @PostMapping

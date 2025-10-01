@@ -10,6 +10,7 @@ import com.example.AgendamentoMedico.repositories.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +24,9 @@ public class MedicoService {
     @Autowired
     private EspecialidadeService especialidadeService;
 
-    public Page<MedicoResponseDTO> listarPaginado(int page, int size) {
-        return medicoRepository.findAll(PageRequest.of(page, size))
+    public Page<MedicoResponseDTO> listarTodos(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return medicoRepository.findAll(pageable)
                 .map(MedicoMapper::toResponseDTO);
     }
 
@@ -34,8 +36,9 @@ public class MedicoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
     }
 
-    public Page<MedicoResponseDTO>  buscarPorEspecialidade(String especialidade, int page, int size) {
-        return medicoRepository.findByEspecialidades_NomeIgnoreCase(especialidade, PageRequest.of(page, size))
+    public Page<MedicoResponseDTO> listarPorEspecialidade(String especialidade, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return medicoRepository.findByEspecialidades_NomeIgnoreCase(especialidade, pageable)
                 .map(MedicoMapper::toResponseDTO);
     }
 
