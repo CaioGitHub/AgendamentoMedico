@@ -52,7 +52,7 @@ public class AgendaController {
             description = "Cria um novo agendamento vinculando paciente, médico e data da consulta.")
     @ApiResponse(responseCode = "201", description = "Consulta agendada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação nos parâmetros")
-    public ResponseEntity<AgendamentoResponseDTO> agendar(@RequestBody AgendamentoRequestDTO dto) {
+    public ResponseEntity<AgendamentoResponseDTO> agendar(@Valid @RequestBody AgendamentoRequestDTO dto) {
         var agendamento = service.agendar(
                 dto.getPacienteId(),
                 dto.getMedicoId(),
