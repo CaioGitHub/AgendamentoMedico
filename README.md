@@ -161,6 +161,22 @@ AgendamentoMedico/
    ```bash
    http://localhost:8080/index.html
 
+### 🔹 Rodando com Docker
+
+Caso prefira rodar a aplicação em um container Docker:
+
+1. Buildar a imagem:
+   ```bash
+   docker build -t agendamento-medico .
+
+2. Rodar o container:
+   ```bash
+   docker run -p 8080:8080 agendamento-medico
+
+3. Acesse a aplicação no navegador:
+   ```bash
+   http://localhost:8080/index.html
+
 ## 🛠️ Estrutura das Branches
 
 - main → branch de produção / releases
