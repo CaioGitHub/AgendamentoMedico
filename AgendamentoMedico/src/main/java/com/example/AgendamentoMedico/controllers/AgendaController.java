@@ -1,11 +1,15 @@
 package com.example.AgendamentoMedico.controllers;
 
+import com.example.AgendamentoMedico.dtos.AgendamentoRequestDTO;
+import com.example.AgendamentoMedico.dtos.AgendamentoResponseDTO;
 import com.example.AgendamentoMedico.enums.TipoConsulta;
+import com.example.AgendamentoMedico.mappers.AgendamentoMapper;
 import com.example.AgendamentoMedico.models.Agenda;
 import com.example.AgendamentoMedico.services.AgendaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,25 +22,29 @@ import java.util.List;
 public class AgendaController {
 
     private final AgendaService service;
+    private final AgendamentoMapper mapper;
 
-    public AgendaController(AgendaService service) {
+    public AgendaController(AgendaService service, AgendamentoMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @GetMapping
     @Operation(summary = "Lista todos os agendamentos",
             description = "Retorna todos os agendamentos cadastrados.")
     @ApiResponse(responseCode = "200", description = "Agendamentos listados com sucesso")
-    public List<Agenda> listar() {
-        return service.listar();
+    public ResponseEntity<List<AgendamentoResponseDTO>> listar() {
+        var list = service.listar().stream().map(mapper::toResponse).toList();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um agendamento por ID")
     @ApiResponse(responseCode = "200", description = "Agendamento encontrado")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
-    public ResponseEntity<Agenda> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(service.buscarPorId(id));
+    public ResponseEntity<AgendamentoResponseDTO> buscarPorId(@PathVariable Long id) {
+        Agenda a = service.buscarPorId(id);
+        return ResponseEntity.ok(mapper.toResponse(a));
     }
 
     @PostMapping("/agendar")
@@ -44,14 +52,14 @@ public class AgendaController {
             description = "Cria um novo agendamento vinculando paciente, médico e data da consulta.")
     @ApiResponse(responseCode = "201", description = "Consulta agendada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação nos parâmetros")
-    public ResponseEntity<Agenda> agendar(@RequestParam Long pacienteId,
-                                          @RequestParam Long medicoId,
-                                          @RequestParam String dataHora,
-                                          @RequestParam TipoConsulta tipoConsulta) {
-
-        LocalDateTime data = LocalDateTime.parse(dataHora); // formato ISO: 2025-10-12T14:00
-        Agenda agendamento = service.agendar(pacienteId, medicoId, data, tipoConsulta);
-        return ResponseEntity.ok(agendamento);
+    public ResponseEntity<AgendamentoResponseDTO> agendar(@RequestBody AgendamentoRequestDTO dto) {
+        var agendamento = service.agendar(
+                dto.getPacienteId(),
+                dto.getMedicoId(),
+                dto.getDataHora(),
+                dto.getTipoConsulta()
+        );
+        return ResponseEntity.ok(mapper.toResponse(agendamento));
     }
 
     @PutMapping("/{id}/remarcar")

@@ -1,4 +1,3 @@
-/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -6,32 +5,30 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* BODY: apenas fundo */
 body {
     width: 100vw;
     height: 100vh;
     background: linear-gradient(135deg, rgba(58,123,213,0.9), rgba(58,213,176,0.9)),
                 url('https://images.unsplash.com/photo-1588776814546-c3aa9e8230d4?fit=crop&w=1350&q=80') no-repeat center center/cover;
     display: flex;
-    justify-content: center;      /* centraliza o container */
+    justify-content: center;
     align-items: center;
 }
 
-/* CONTAINER: controla o layout lado a lado */
 .container {
-    display: flex;                /* <<< ESSENCIAL PARA FICAREM LADO A LADO */
-    flex-direction: row;          /* direção horizontal */
-    justify-content: center;      /* centraliza horizontalmente */
-    align-items: stretch;         /* as duas colunas ficam com a mesma altura */
-    gap: 2rem;                    /* espaço entre os dois cards */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;                    
     width: 90%;
     max-width: 1200px;
-    height: 90%;                   /* ocupa quase a tela toda */
+    height: 90%;                   
 }
 
-/* GLASS CARDS */
+
 .glass-card {
-    flex: 1;                       /* cada card ocupa metade do espaço */
+    flex: 1;                       
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -49,7 +46,7 @@ h2 {
     margin-bottom: 1rem;
 }
 
-/* LISTA DE MÉDICOS */
+
 #medicosList {
     flex: 1;
     overflow-y: auto;
@@ -73,7 +70,7 @@ h2 {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* PAGINAÇÃO */
+
 .pagination {
     display: flex;
     justify-content: space-between;
@@ -96,7 +93,7 @@ h2 {
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* FORMULÁRIO */
+
 form {
     display: flex;
     flex-direction: column;
@@ -140,7 +137,7 @@ input::placeholder {
     color: #ddd;
 }
 
-/* BOTÃO SALVAR */
+
 .btn-primary {
     width: 100%;
     padding: 0.9rem;
@@ -160,10 +157,10 @@ input::placeholder {
     background: linear-gradient(45deg, #00f2fe, #4facfe);
 }
 
-/* RESPONSIVIDADE */
+
 @media (max-width: 900px) {
     .container {
-        flex-direction: column;  /* empilha no mobile */
+        flex-direction: column;  
         height: auto;
     }
 }

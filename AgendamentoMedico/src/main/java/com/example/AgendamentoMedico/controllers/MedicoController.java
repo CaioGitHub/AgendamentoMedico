@@ -23,6 +23,9 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @GetMapping
+    @Operation(summary = "Lista todos os médicos",
+            description = "Retorna uma lista de todos os médicos cadastrados.")
+    @ApiResponse(responseCode = "200", description = "Lista de médicos retornada com sucesso")
     public ResponseEntity<Page<MedicoResponseDTO>> listarTodos(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size) {
@@ -40,6 +43,10 @@ public class MedicoController {
     }
 
     @GetMapping("/especialidade/{especialidade}")
+    @Operation(summary = "Busca médicos por especialidade",
+            description = "Retorna todos os médicos que possuem a especialidade informada.")
+    @ApiResponse(responseCode = "200", description = "Lista de médicos retornada com sucesso")
+    @ApiResponse(responseCode = "404", description = "Nenhum médico encontrado para a especialidade")
     public ResponseEntity<Page<MedicoResponseDTO>> listarPorEspecialidade(
             @PathVariable String especialidade,
             @RequestParam(defaultValue = "0") int page,

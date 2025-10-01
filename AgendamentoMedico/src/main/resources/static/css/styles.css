@@ -1,4 +1,4 @@
-/* Reset */
+
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +16,7 @@ body.home-bg {
               url('https://images.unsplash.com/photo-1588776814546-c3aa9e8230d4?fit=crop&w=1350&q=80') no-repeat center center/cover;
 }
 
-/* Glassmorphism Card */
+
 .glass-card {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
@@ -28,7 +28,7 @@ body.home-bg {
   text-align: center;
 }
 
-/* Home Card */
+
 .home-card {
   max-width: 400px;
 }
@@ -44,7 +44,6 @@ body.home-bg {
   color: #e0e0e0;
 }
 
-/* Menu Buttons */
 .menu-buttons {
   display: flex;
   flex-direction: column;

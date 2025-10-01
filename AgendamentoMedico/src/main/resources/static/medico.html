@@ -9,7 +9,6 @@
 <body>
 
 <div class="container">
-    <!-- LISTA + FILTRO (ESQUERDA) -->
     <section class="glass-card">
         <div class="list-header">
             <h2 style="margin:0">Lista de Médicos</h2>
@@ -17,12 +16,11 @@
                 <label for="filtroEspecialidade">Filtrar por Especialidade</label>
                 <select id="filtroEspecialidade">
                     <option value="">Todas</option>
-                    <!-- opções vêm do JS -->
                 </select>
             </div>
         </div>
 
-        <div id="medicosList"><!-- cards aqui --></div>
+        <div id="medicosList"></div>
 
         <div class="pagination">
             <button id="prevPage" class="btn-secondary" disabled>Anterior</button>
@@ -31,7 +29,6 @@
         </div>
     </section>
 
-    <!-- FORM DE CRIAÇÃO (DIREITA) - inalterado -->
     <section class="glass-card">
         <h2>Novo Médico</h2>
         <form id="medicoForm">
@@ -53,7 +50,6 @@
             <div class="form-group">
                 <label for="especialidades">Especialidades</label>
                 <select id="especialidades" multiple>
-                    <!-- opções via JS -->
                 </select>
             </div>
 

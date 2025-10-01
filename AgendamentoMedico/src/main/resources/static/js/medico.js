@@ -1,10 +1,10 @@
 const API_MEDICOS = '/api/medicos';
 const API_ESPECIALIDADES = '/api/especialidades';
 
-let paginaAtual = 0;        // base 0 (Spring)
-const itensPorPagina = 5;   // mantenha sincronizado com o controller (defaultValue)
+let paginaAtual = 0;
+const itensPorPagina = 5;
 let totalPaginas = 1;
-let especialidadeSelecionada = ''; // filtro ativo
+let especialidadeSelecionada = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   carregarEspecialidadesForm();
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('medicoForm').addEventListener('submit', salvarMedico);
 
-  // paginação
   document.getElementById('prevPage').addEventListener('click', () => {
     if (paginaAtual > 0) {
       paginaAtual--;
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // filtro
   document.getElementById('filtroEspecialidade').addEventListener('change', (e) => {
     especialidadeSelecionada = e.target.value;
     paginaAtual = 0;
@@ -36,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ================= ESPECIALIDADES (FORM) =================
 function carregarEspecialidadesForm() {
   fetch(API_ESPECIALIDADES)
     .then(res => res.json())
@@ -54,7 +51,6 @@ function carregarEspecialidadesForm() {
     .catch(err => console.error('Erro ao carregar especialidades (form):', err));
 }
 
-// ================= ESPECIALIDADES (FILTRO) =================
 function carregarEspecialidadesFiltro() {
   fetch(API_ESPECIALIDADES)
     .then(res => res.json())
@@ -64,7 +60,7 @@ function carregarEspecialidadesFiltro() {
       filtroSelect.innerHTML = '<option value="">Todas</option>';
       data.forEach(esp => {
         const option = document.createElement('option');
-        option.value = esp.nome;   // filtro por nome
+        option.value = esp.nome;
         option.textContent = esp.nome;
         filtroSelect.appendChild(option);
       });
@@ -72,7 +68,6 @@ function carregarEspecialidadesFiltro() {
     .catch(err => console.error('Erro ao carregar especialidades (filtro):', err));
 }
 
-// ================= LISTAGEM (PAGINADA) =================
 function carregarMedicos() {
   let url;
   if (especialidadeSelecionada) {
@@ -84,16 +79,14 @@ function carregarMedicos() {
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      // Agora SEMPRE esperamos um Page do Spring
-      const medicos = data.content;        // conteúdo da página atual
-      totalPaginas = data.totalPages;      // total de páginas
+      const medicos = data.content;
+      totalPaginas = data.totalPages;
       renderizarMedicos(medicos);
     })
     .catch(err => console.error('Erro ao carregar médicos:', err));
 }
 
 
-// ================= RENDER =================
 function renderizarMedicos(medicos) {
   const container = document.getElementById('medicosList');
   const pageInfo = document.getElementById('pageInfo');
@@ -124,7 +117,6 @@ function renderizarMedicos(medicos) {
 }
 
 
-// ================= CREATE =================
 function salvarMedico(event) {
   event.preventDefault();
 
@@ -148,7 +140,6 @@ function salvarMedico(event) {
     .then(() => {
       alert('Médico cadastrado com sucesso!');
       document.getElementById('medicoForm').reset();
-      // após criar, limpa filtro e volta pra primeira página
       especialidadeSelecionada = '';
       const filtro = document.getElementById('filtroEspecialidade');
       if (filtro) filtro.value = '';

@@ -24,7 +24,7 @@ public class PacienteRequestDTO {
     private String telefone;
 
     @NotNull(message = "Data de nascimento é obrigatória")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
     private Long convenioId;

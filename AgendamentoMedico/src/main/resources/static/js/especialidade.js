@@ -1,6 +1,6 @@
 const API_URL = '/api/especialidades';
 let currentPage = 1;
-const pageSize = 10; // itens por página
+const pageSize = 10;
 let especialidades = [];
 
 document.addEventListener('DOMContentLoaded', () => {

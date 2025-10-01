@@ -12,6 +12,7 @@ public class MedicoMapper {
 
     public static MedicoResponseDTO toResponseDTO(Medico medico) {
         return MedicoResponseDTO.builder()
+                .id(medico.getId())
                 .nome(medico.getNome())
                 .crm(medico.getCrm())
                 .endereco(medico.getEndereco())
