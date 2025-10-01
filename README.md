@@ -102,15 +102,38 @@ AgendamentoMedico/
 
 ## 📡 Endpoints Principais
 
-| Recurso          | Método | URL                           | Descrição                     |
-|------------------|--------|--------------------------------|--------------------------------|
-| Agendamentos     | GET    | `/agendas`                     | Lista todos os agendamentos   |
-|                  | POST   | `/agendas/agendar`             | Cria um novo agendamento      |
-|                  | PATCH  | `/agendas/{id}/cancelar`       | Cancela um agendamento        |
-| Médicos          | GET    | `/api/medicos`                 | Lista médicos                 |
-| Pacientes        | GET    | `/api/pacientes`               | Lista pacientes               |
-| Convênios        | GET    | `/api/convenios`               | Lista convênios               |
-| Especialidades   | GET    | `/api/especialidades`          | Lista especialidades          |
+| Recurso          | Método  | URL                                        | Descrição                                 |
+|------------------|---------|--------------------------------------------|-------------------------------------------|
+| **Agendamentos** | GET     | `/agendas`                                 | Lista todos os agendamentos              |
+|                  | GET     | `/agendas/{id}`                            | Busca um agendamento por ID              |
+|                  | POST    | `/agendas/agendar`                         | Cria um novo agendamento                 |
+|                  | PUT     | `/agendas/{id}/remarcar`                   | Remarca um agendamento existente         |
+|                  | PATCH   | `/agendas/{id}/cancelar`                   | Cancela um agendamento                   |
+|                  | DELETE  | `/agendas/{id}`                            | Remove um agendamento                    |
+| **Médicos**      | GET     | `/api/medicos`                              | Lista todos os médicos (com paginação)   |
+|                  | GET     | `/api/medicos/{id}`                         | Busca um médico por ID                   |
+|                  | GET     | `/api/medicos/especialidade/{especialidade}`| Lista médicos por especialidade          |
+|                  | POST    | `/api/medicos`                              | Cadastra um novo médico                  |
+|                  | PUT     | `/api/medicos/{id}`                         | Atualiza um médico existente             |
+|                  | DELETE  | `/api/medicos/{id}`                         | Remove um médico                          |
+| **Pacientes**    | GET     | `/api/pacientes`                            | Lista todos os pacientes                 |
+|                  | GET     | `/api/pacientes/{id}`                       | Busca um paciente por ID                 |
+|                  | GET     | `/api/pacientes/email/{email}`              | Busca um paciente por email              |
+|                  | GET     | `/api/pacientes/search?nome={nome}`         | Busca pacientes por nome                 |
+|                  | POST    | `/api/pacientes`                            | Cadastra um novo paciente                |
+|                  | PUT     | `/api/pacientes/{id}`                       | Atualiza um paciente existente           |
+|                  | PATCH   | `/api/pacientes/{id}`                       | Atualiza parcialmente um paciente        |
+|                  | DELETE  | `/api/pacientes/{id}`                       | Remove um paciente                        |
+| **Convênios**    | GET     | `/api/convenios`                             | Lista todos os convênios                  |
+|                  | GET     | `/api/convenios/{id}`                        | Busca um convênio por ID                  |
+|                  | POST    | `/api/convenios`                             | Cadastra um novo convênio                 |
+|                  | PUT     | `/api/convenios/{id}`                        | Atualiza um convênio existente            |
+|                  | DELETE  | `/api/convenios/{id}`                        | Remove um convênio                         |
+| **Especialidades** | GET   | `/api/especialidades`                        | Lista todas as especialidades             |
+|                  | GET     | `/api/especialidades/{id}`                   | Busca uma especialidade por ID            |
+|                  | POST    | `/api/especialidades`                        | Cadastra uma nova especialidade           |
+|                  | PUT     | `/api/especialidades/{id}`                   | Atualiza uma especialidade existente      |
+|                  | DELETE  | `/api/especialidades/{id}`                   | Remove uma especialidade                   |
 
 ---
 
