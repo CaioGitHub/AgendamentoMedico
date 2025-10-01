@@ -19,21 +19,20 @@
         <form id="agendaForm">
             <div class="form-group">
                 <label for="paciente">Paciente</label>
-                <input type="text" id="paciente" placeholder="Digite o nome do paciente">
+                <input type="text" id="paciente" placeholder="Digite o nome do paciente" required>
             </div>
 
             <div class="form-group">
                 <label for="medico">Médico</label>
-                <select id="medico">
-                    <option>Selecione um médico</option>
-                    <option>Dr. João - Cardiologia</option>
-                    <option>Dra. Maria - Dermatologia</option>
+                <select id="medico" required>
+                    <option value="">Selecione um médico</option>
+                    <!-- Médicos serão carregados via JS -->
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="tipoConsulta">Tipo de Consulta</label>
-                <select id="tipoConsulta">
+                <select id="tipoConsulta" required>
                     <option value="PRESENCIAL">Presencial</option>
                     <option value="REMOTO">Remoto</option>
                 </select>
@@ -41,7 +40,7 @@
 
             <div class="form-group">
                 <label for="dataHora">Data e Hora</label>
-                <input type="datetime-local" id="dataHora">
+                <input type="datetime-local" id="dataHora" required>
             </div>
 
             <button type="submit" class="btn-primary">Agendar</button>
@@ -53,5 +52,7 @@
     </footer>
 
 </div>
+
+<script src="/js/agenda.js"></script>
 </body>
 </html>
