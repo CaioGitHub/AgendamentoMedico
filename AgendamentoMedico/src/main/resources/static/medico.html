@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cadastro de Médico</title>
+    <link rel="stylesheet" href="/css/medico.css"/>
+</head>
+<body>
+
+<div class="container">
+    <section class="glass-card">
+        <div class="list-header">
+            <h2 style="margin:0">Lista de Médicos</h2>
+            <div class="filter-bar">
+                <label for="filtroEspecialidade">Filtrar por Especialidade</label>
+                <select id="filtroEspecialidade">
+                    <option value="">Todas</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="medicosList"></div>
+
+        <div class="pagination">
+            <button id="prevPage" class="btn-secondary" disabled>Anterior</button>
+            <span id="pageInfo">Página 1</span>
+            <button id="nextPage" class="btn-secondary">Próximo</button>
+        </div>
+    </section>
+
+    <section class="glass-card">
+        <h2>Novo Médico</h2>
+        <form id="medicoForm">
+            <div class="form-group">
+                <label for="nome">Nome do Médico</label>
+                <input type="text" id="nome" placeholder="Digite o nome" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="crm">CRM</label>
+                <input type="text" id="crm" placeholder="Digite o CRM" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="endereco">Endereço</label>
+                <input type="text" id="endereco" placeholder="Digite o endereço" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="especialidades">Especialidades</label>
+                <select id="especialidades" multiple>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary">Salvar Médico</button>
+        </form>
+    </section>
+</div>
+
+<script src="/js/medico.js"></script>
+</body>
+</html>

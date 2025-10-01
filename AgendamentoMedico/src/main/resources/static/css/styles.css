@@ -1,0 +1,66 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body.home-bg {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg, rgba(58,123,213,0.8), rgba(58,213,176,0.8)),
+              url('https://images.unsplash.com/photo-1588776814546-c3aa9e8230d4?fit=crop&w=1350&q=80') no-repeat center center/cover;
+}
+
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  color: #fff;
+  text-align: center;
+}
+
+
+.home-card {
+  max-width: 400px;
+}
+
+.home-card h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.home-card p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 0.9rem;
+  border-radius: 12px;
+  font-weight: 600;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  color: #fff;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(45deg, #00f2fe, #4facfe);
+}

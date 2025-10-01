@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class MedicoRequestDTO {
+    private Long id;
     private String nome;
     private String crm;
     private String endereco;
