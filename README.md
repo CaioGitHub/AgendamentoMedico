@@ -40,7 +40,6 @@ http://localhost:8080/index.html
 
 ## 🖼️ Interface do Sistema
 
-![Home]
 <img width="751" height="660" alt="image" src="https://github.com/user-attachments/assets/3ec3fff7-9f38-49f4-ae42-d4a04547dd93" />
 
 ---
