@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Especialidades</title>
+    <link rel="stylesheet" href="/css/especialidade.css">
+</head>
+<body>
+
+<div class="app-container">
+    <header class="header">
+        <h1>Gerenciamento de Especialidades</h1>
+    </header>
+
+    <div class="main-content">
+        <!-- Lista à esquerda -->
+        <div class="glass-card lista-card">
+            <h2>Lista de Especialidades</h2>
+            <ul id="listaEspecialidades" class="list"></ul>
+
+            <!-- Paginação -->
+            <div class="pager">
+                <button id="prevPage" class="btn-pager">&lt;</button>
+                <span id="pageInfo"></span>
+                <button id="nextPage" class="btn-pager">&gt;</button>
+            </div>
+        </div>
+
+        <!-- Formulário à direita -->
+        <div class="glass-card form-card">
+            <h2>Cadastrar / Editar</h2>
+
+            <div class="form-group">
+                <label for="idEspecialidade">ID (somente para editar)</label>
+                <input type="number" id="idEspecialidade" placeholder="Deixe vazio para novo">
+            </div>
+
+            <div class="form-group">
+                <label for="nomeEspecialidade">Nome da Especialidade</label>
+                <input type="text" id="nomeEspecialidade" placeholder="Ex.: Cardiologia">
+            </div>
+
+            <button class="btn-primary" id="btnSalvar">Salvar</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Agendamento Médico</p>
+    </footer>
+</div>
+
+<script src="/js/especialidade.js"></script>
+</body>
+</html>
