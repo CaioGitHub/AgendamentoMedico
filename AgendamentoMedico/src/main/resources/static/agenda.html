@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Agendamentos</title>
+    <link rel="stylesheet" href="/css/agenda.css">
+</head>
+<body>
+<div class="app-container">
+
+    <header class="header">
+        <h1>Gerenciamento de Agendamentos</h1>
+    </header>
+
+    <main class="main-content">
+        <div class="glass-card lista-card">
+            <h2>Lista de Agendamentos</h2>
+            <ul id="listaAgendamentos" class="list"></ul>
+
+            <div class="pager">
+                <button id="prevPage" class="btn-pager">&lt;</button>
+                <span id="pageInfo"></span>
+                <button id="nextPage" class="btn-pager">&gt;</button>
+            </div>
+        </div>
+
+        <div class="glass-card form-card">
+            <h2>Agendar Consulta</h2>
+
+            <div class="form-group">
+                <label for="paciente">Paciente</label>
+                <select id="paciente" required>
+                    <option value="">Selecione um paciente</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="medico">Médico</label>
+                <select id="medico" required>
+                    <option value="">Selecione um médico</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoConsulta">Tipo de Consulta</label>
+                <select id="tipoConsulta" required>
+                    <option value="PRESENCIAL">Presencial</option>
+                    <option value="REMOTO">Remoto</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dataHora">Data e Hora</label>
+                <input type="datetime-local" id="dataHora" required>
+            </div>
+
+            <button id="btnAgendar" class="btn-primary">Agendar</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Agendamento Médico</p>
+    </footer>
+
+</div>
+
+<script src="/js/agenda.js"></script>
+</body>
+</html>

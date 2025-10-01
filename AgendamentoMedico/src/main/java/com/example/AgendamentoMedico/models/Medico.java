@@ -24,7 +24,11 @@ public class Medico {
     @Column(nullable=false)
     private String endereco;
 
-    @ManyToOne
-    @JoinColumn(name="especialidade_id", nullable=false)
-    private List<Especialidade> especialidade;
+    @ManyToMany
+    @JoinTable(
+        name = "medico_especialidade",
+        joinColumns = @JoinColumn(name = "medico_id"),
+        inverseJoinColumns = @JoinColumn(name = "especialidade_id")
+    )
+    private List<Especialidade> especialidades;
 }

@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(58,123,213,0.9), rgba(58,213,176,0.9)),
+                url('https://images.unsplash.com/photo-1588776814546-c3aa9e8230d4?fit=crop&w=1350&q=80') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;                    
+    width: 90%;
+    max-width: 1200px;
+    height: 90%;                   
+}
+
+
+.glass-card {
+    flex: 1;                       
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+
+#medicosList {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+#medicosList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#medicosList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.medico-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+select[multiple] {
+    height: 120px;
+    overflow-y: auto;
+}
+
+select option {
+    background-color: rgba(255,255,255,0.25);
+    color: #000;
+    backdrop-filter: blur(8px);
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+
+.btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    margin-top: auto;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+}
+
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;  
+        height: auto;
+    }
+}
+
+.list-header{
+          display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:.75rem
+        }
+        .filter-bar{min-width:42%}
+        .filter-bar label{display:block;margin-bottom:.35rem;font-size:.9rem;color:#e0e0e0}
+        .filter-bar select{
+          width:100%;padding:.7rem .9rem;border:none;border-radius:10px;outline:none;
+          background:rgba(255,255,255,.2);color:#fff
+        }
+        @media (max-width: 900px){
+          .list-header{flex-direction:column;align-items:stretch}
+          .filter-bar{min-width:100%}
+        }
