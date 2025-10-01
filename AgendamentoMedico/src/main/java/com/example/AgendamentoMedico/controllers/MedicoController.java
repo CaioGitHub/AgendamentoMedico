@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,11 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @GetMapping
-    @Operation(summary = "Lista todos os médicos",
-            description = "Retorna uma lista de todos os médicos cadastrados.")
-    @ApiResponse(responseCode = "200", description = "Lista de médicos retornada com sucesso")
-    public ResponseEntity<List<MedicoResponseDTO>> listarTodos() {
-        return ResponseEntity.ok(medicoService.listarTodos());
+    public ResponseEntity<Page<MedicoResponseDTO>> listarTodos(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size
+    ) {
+        return ResponseEntity.ok(medicoService.listarPaginado(page, size));
     }
 
     @GetMapping("/{id}")
@@ -39,12 +40,12 @@ public class MedicoController {
     }
 
     @GetMapping("/especialidade/{especialidade}")
-    @Operation(summary = "Busca médicos por especialidade",
-            description = "Retorna todos os médicos que possuem a especialidade informada.")
-    @ApiResponse(responseCode = "200", description = "Lista de médicos retornada com sucesso")
-    @ApiResponse(responseCode = "404", description = "Nenhum médico encontrado para a especialidade")
-    public ResponseEntity<List<MedicoResponseDTO>> buscarPorEspecialidade(@PathVariable String especialidade) {
-        return ResponseEntity.ok(medicoService.buscarPorEspecialidade(especialidade));
+    public ResponseEntity<Page<MedicoResponseDTO>> buscarPorEspecialidade(
+            @PathVariable String especialidade,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size
+    ) {
+        return ResponseEntity.ok(medicoService.buscarPorEspecialidade(especialidade, page, size));
     }
 
     @PostMapping

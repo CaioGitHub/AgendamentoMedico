@@ -30,5 +30,5 @@ public class Medico {
         joinColumns = @JoinColumn(name = "medico_id"),
         inverseJoinColumns = @JoinColumn(name = "especialidade_id")
     )
-    private List<Especialidade> especialidade;
+    private List<Especialidade> especialidades;
 }

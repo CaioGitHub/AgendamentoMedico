@@ -8,6 +8,8 @@ import com.example.AgendamentoMedico.models.Especialidade;
 import com.example.AgendamentoMedico.models.Medico;
 import com.example.AgendamentoMedico.repositories.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +23,9 @@ public class MedicoService {
     @Autowired
     private EspecialidadeService especialidadeService;
 
-    public List<MedicoResponseDTO> listarTodos() {
-        return medicoRepository.findAll()
-                .stream()
-                .map(MedicoMapper::toResponseDTO)
-                .toList();
+    public Page<MedicoResponseDTO> listarPaginado(int page, int size) {
+        return medicoRepository.findAll(PageRequest.of(page, size))
+                .map(MedicoMapper::toResponseDTO);
     }
 
     public MedicoResponseDTO buscarPorId(Long id) {
@@ -34,11 +34,9 @@ public class MedicoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com ID: " + id));
     }
 
-    public List<MedicoResponseDTO> buscarPorEspecialidade(String especialidade) {
-        return medicoRepository.findByEspecialidades_NomeIgnoreCase(especialidade)
-                .stream()
-                .map(MedicoMapper::toResponseDTO)
-                .toList();
+    public Page<MedicoResponseDTO>  buscarPorEspecialidade(String especialidade, int page, int size) {
+        return medicoRepository.findByEspecialidades_NomeIgnoreCase(especialidade, PageRequest.of(page, size))
+                .map(MedicoMapper::toResponseDTO);
     }
 
     public MedicoResponseDTO salvar(MedicoRequestDTO medicoRequestDTO) {

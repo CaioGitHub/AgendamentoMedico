@@ -1,0 +1,169 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+/* BODY: apenas fundo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(58,123,213,0.9), rgba(58,213,176,0.9)),
+                url('https://images.unsplash.com/photo-1588776814546-c3aa9e8230d4?fit=crop&w=1350&q=80') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;      /* centraliza o container */
+    align-items: center;
+}
+
+/* CONTAINER: controla o layout lado a lado */
+.container {
+    display: flex;                /* <<< ESSENCIAL PARA FICAREM LADO A LADO */
+    flex-direction: row;          /* direção horizontal */
+    justify-content: center;      /* centraliza horizontalmente */
+    align-items: stretch;         /* as duas colunas ficam com a mesma altura */
+    gap: 2rem;                    /* espaço entre os dois cards */
+    width: 90%;
+    max-width: 1200px;
+    height: 90%;                   /* ocupa quase a tela toda */
+}
+
+/* GLASS CARDS */
+.glass-card {
+    flex: 1;                       /* cada card ocupa metade do espaço */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* LISTA DE MÉDICOS */
+#medicosList {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+#medicosList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#medicosList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.medico-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* PAGINAÇÃO */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* FORMULÁRIO */
+form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+select[multiple] {
+    height: 120px;
+    overflow-y: auto;
+}
+
+select option {
+    background-color: rgba(255,255,255,0.25);
+    color: #000;
+    backdrop-filter: blur(8px);
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+/* BOTÃO SALVAR */
+.btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    margin-top: auto;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;  /* empilha no mobile */
+        height: auto;
+    }
+}
