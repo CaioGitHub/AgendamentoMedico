@@ -68,6 +68,8 @@ http://localhost:8080/index.html
 
 ## 📂 Estrutura do Projeto
 
+
+```plaintext
 AgendamentoMedico/
 │
 ├── src/main/java/com/example/AgendamentoMedico/
@@ -95,7 +97,7 @@ AgendamentoMedico/
 │
 ├── pom.xml # Configuração do Maven
 └── README.md # Documentação do projeto
-
+```
 ---
 
 ## 📡 Endpoints Principais
