@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.method.ControllerAdviceBean;
 
 /**
@@ -22,8 +21,8 @@ final class SpringDocControllerAdviceCompatibility {
     private static final Constructor<ControllerAdviceBean> SINGLE_ARG_CTOR;
 
     static {
-        TWO_ARG_CTOR = ReflectionUtils.findConstructor(ControllerAdviceBean.class, Object.class, BeanFactory.class);
-        SINGLE_ARG_CTOR = ReflectionUtils.findConstructor(ControllerAdviceBean.class, Object.class);
+        TWO_ARG_CTOR = findConstructor(ControllerAdviceBean.class, Object.class, BeanFactory.class);
+        SINGLE_ARG_CTOR = findConstructor(ControllerAdviceBean.class, Object.class);
     }
 
     private SpringDocControllerAdviceCompatibility() {
@@ -45,6 +44,18 @@ final class SpringDocControllerAdviceCompatibility {
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
             throw new IllegalStateException("Failed to instantiate ControllerAdviceBean", ex);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Constructor<ControllerAdviceBean> findConstructor(Class<?> type, Class<?>... parameterTypes) {
+        try {
+            Constructor<?> constructor = type.getDeclaredConstructor(parameterTypes);
+            constructor.setAccessible(true);
+            return (Constructor<ControllerAdviceBean>) constructor;
+        }
+        catch (NoSuchMethodException ex) {
+            return null;
         }
     }
 }
