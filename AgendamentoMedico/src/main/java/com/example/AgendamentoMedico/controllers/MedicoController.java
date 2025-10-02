@@ -30,12 +30,15 @@ public class MedicoController {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
 
-        if (page == null || size == null) {
+        if (page == null && size == null) {
             List<MedicoResponseDTO> medicos = medicoService.listarTodos();
             return ResponseEntity.ok(medicos);
         }
 
-        Page<MedicoResponseDTO> medicos = medicoService.listarTodos(page, size);
+        int pageNumber = page != null ? page : 0;
+        int pageSize = size != null ? size : 4;
+
+        Page<MedicoResponseDTO> medicos = medicoService.listarTodos(pageNumber, pageSize);
         return ResponseEntity.ok(medicos);
     }
 
