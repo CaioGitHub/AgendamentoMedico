@@ -26,11 +26,20 @@ public class MedicoController {
     @Operation(summary = "Lista todos os médicos",
             description = "Retorna uma lista de todos os médicos cadastrados.")
     @ApiResponse(responseCode = "200", description = "Lista de médicos retornada com sucesso")
-    public ResponseEntity<Page<MedicoResponseDTO>> listarTodos(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size) {
+    public ResponseEntity<?> listarTodos(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
 
-        return ResponseEntity.ok(medicoService.listarTodos(page, size));
+        if (page == null && size == null) {
+            List<MedicoResponseDTO> medicos = medicoService.listarTodos();
+            return ResponseEntity.ok(medicos);
+        }
+
+        int pageNumber = page != null ? page : 0;
+        int pageSize = size != null ? size : 4;
+
+        Page<MedicoResponseDTO> medicos = medicoService.listarTodos(pageNumber, pageSize);
+        return ResponseEntity.ok(medicos);
     }
 
     @GetMapping("/{id}")
