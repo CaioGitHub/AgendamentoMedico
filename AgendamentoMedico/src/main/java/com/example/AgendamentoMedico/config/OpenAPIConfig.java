@@ -11,6 +11,7 @@ public class OpenAPIConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
+                .openapi("3.0.1")
                 .info(new Info()
                         .title("API - Agendamento Médico")
                         .version("v1")
