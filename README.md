@@ -145,6 +145,12 @@ AgendamentoMedico/
 - (Opcional) Docker, se for usar container
 
 ### 🔹 Passos
+
+### 🔹 Perfil de desenvolvimento com carga inicial
+Caso precise carregar os dados iniciais fornecidos pelos scripts SQL, execute a aplicação com o perfil `dev` habilitado. Você pode fazer isso adicionando o parâmetro `--spring.profiles.active=dev` ao comando de execução (por exemplo, `mvn spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=dev`).
+
+O perfil padrão (configurado em `application-default.properties`) mantém `spring.sql.init.mode=embedded`, evitando a execução automática dos scripts em bancos de dados persistentes. Já o perfil `dev` reativa a carga inicial e adia a inicialização do JPA para garantir compatibilidade com o banco em memória H2.
+
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seu-usuario/AgendamentoMedico.git
