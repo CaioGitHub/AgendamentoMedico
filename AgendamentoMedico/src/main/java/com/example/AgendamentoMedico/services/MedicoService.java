@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MedicoService {
@@ -28,6 +29,13 @@ public class MedicoService {
         Pageable pageable = PageRequest.of(page, size);
         return medicoRepository.findAll(pageable)
                 .map(MedicoMapper::toResponseDTO);
+    }
+
+    public List<MedicoResponseDTO> listarTodos() {
+        return medicoRepository.findAll()
+                .stream()
+                .map(MedicoMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
     public MedicoResponseDTO buscarPorId(Long id) {
