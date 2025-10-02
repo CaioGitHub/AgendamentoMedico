@@ -26,6 +26,8 @@ public class EspecialidadeController {
     @Operation(summary = "Lista todas as especialidades",
             description = "Retorna uma lista com todas as especialidades cadastradas.")
     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
+    // Centralizamos a lógica de listagem no service para manter o controller responsável apenas
+    // pelo fluxo HTTP e garantir que regras de negócio possam evoluir sem impactar a API.
     public ResponseEntity<List<EspecialidadeDTO>> listarTodas() {
         return ResponseEntity.ok(service.listarTodas());
     }
@@ -35,6 +37,8 @@ public class EspecialidadeController {
             description = "Retorna os dados de uma especialidade específica pelo ID.")
     @ApiResponse(responseCode = "200", description = "Especialidade encontrada")
     @ApiResponse(responseCode = "404", description = "Especialidade não encontrada")
+    // Usamos o Optional retornado pelo service para controlar a resposta HTTP e retornar 404 quando
+    // a especialidade não existe, evitando que o controller implemente validações duplicadas.
     public ResponseEntity<EspecialidadeDTO> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
                 .map(ResponseEntity::ok)
@@ -45,6 +49,8 @@ public class EspecialidadeController {
     @Operation(summary = "Cadastra uma nova especialidade")
     @ApiResponse(responseCode = "201", description = "Especialidade criada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação")
+    // Encaminhamos o DTO diretamente ao service, que concentra validações e persistência, para
+    // manter o controller desacoplado das regras de negócio.
     public ResponseEntity<EspecialidadeDTO> salvar(@RequestBody EspecialidadeDTO dto) {
         return ResponseEntity.ok(service.salvar(dto));
     }
@@ -55,6 +61,8 @@ public class EspecialidadeController {
     @ApiResponse(responseCode = "200", description = "Especialidade atualizada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação")
     @ApiResponse(responseCode = "404", description = "Especialidade não encontrada")
+    // A atualização delegada ao service permite reutilizar validações e mapear o retorno no formato
+    // esperado sem duplicar lógica no controller.
     public ResponseEntity<EspecialidadeDTO> atualizar(@PathVariable Long id,
                                                       @RequestBody EspecialidadeDTO dto) {
         return ResponseEntity.ok(service.atualizar(id, dto));
@@ -65,6 +73,8 @@ public class EspecialidadeController {
             description = "Exclui permanentemente uma especialidade pelo ID informado.")
     @ApiResponse(responseCode = "204", description = "Especialidade removida com sucesso")
     @ApiResponse(responseCode = "404", description = "Especialidade não encontrada")
+    // A remoção é tratada pelo service para garantir consistência e validação antes de excluir,
+    // enquanto o controller apenas retorna o status HTTP adequado.
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
