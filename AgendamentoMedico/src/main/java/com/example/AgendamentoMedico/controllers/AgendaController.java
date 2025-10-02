@@ -33,6 +33,8 @@ public class AgendaController {
     @Operation(summary = "Lista todos os agendamentos",
             description = "Retorna todos os agendamentos cadastrados.")
     @ApiResponse(responseCode = "200", description = "Agendamentos listados com sucesso")
+    // Delegamos a busca e a conversão para o service e para o mapper para manter o controller fino
+    // e garantir que as regras de negócio e de apresentação fiquem concentradas em suas camadas.
     public ResponseEntity<List<AgendamentoResponseDTO>> listar() {
         var list = service.listar().stream().map(mapper::toResponse).toList();
         return ResponseEntity.ok(list);
@@ -42,6 +44,8 @@ public class AgendaController {
     @Operation(summary = "Busca um agendamento por ID")
     @ApiResponse(responseCode = "200", description = "Agendamento encontrado")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
+    // Buscamos o agendamento pelo service para reutilizar a validação de existência e depois
+    // convertê-lo para DTO, assegurando consistência de saída em toda a aplicação.
     public ResponseEntity<AgendamentoResponseDTO> buscarPorId(@PathVariable Long id) {
         Agenda a = service.buscarPorId(id);
         return ResponseEntity.ok(mapper.toResponse(a));
@@ -52,6 +56,8 @@ public class AgendaController {
             description = "Cria um novo agendamento vinculando paciente, médico e data da consulta.")
     @ApiResponse(responseCode = "201", description = "Consulta agendada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação nos parâmetros")
+    // Reaproveitamos o serviço para orquestrar a criação do agendamento porque ele valida a
+    // disponibilidade de recursos e garante integridade, convertendo o resultado para DTO no retorno.
     public ResponseEntity<AgendamentoResponseDTO> agendar(@Valid @RequestBody AgendamentoRequestDTO dto) {
         var agendamento = service.agendar(
                 dto.getPacienteId(),
@@ -67,6 +73,8 @@ public class AgendaController {
     @ApiResponse(responseCode = "200", description = "Agendamento remarcado com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
+    // Utilizamos o service para centralizar as regras de remarcação e convertendo a data recebida
+    // em string para LocalDateTime aqui para manter o contrato da API simples ao consumidor.
     public ResponseEntity<Agenda> remarcar(@PathVariable Long id,
                                            @RequestParam String novaDataHora,
                                            @RequestParam TipoConsulta tipoConsulta) {
@@ -81,6 +89,8 @@ public class AgendaController {
             description = "Marca o agendamento como cancelado sem removê-lo do banco de dados.")
     @ApiResponse(responseCode = "200", description = "Agendamento cancelado com sucesso")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
+    // Chamamos o método de cancelamento do service para que todo o fluxo de atualização de status
+    // aconteça em um único ponto, retornando o objeto atualizado para feedback imediato ao cliente.
     public ResponseEntity<Agenda> cancelar(@PathVariable Long id) {
         return ResponseEntity.ok(service.cancelar(id));
     }
@@ -90,6 +100,8 @@ public class AgendaController {
             description = "Exclui permanentemente um agendamento.")
     @ApiResponse(responseCode = "204", description = "Agendamento removido com sucesso")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
+    // Delegamos a exclusão ao service para aproveitar validações centralizadas e retornamos 204
+    // para seguir a convenção REST de remoções sem conteúdo.
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
