@@ -13,7 +13,7 @@ A aplicação permite gerenciar:
 ---
 
 ## 🚀 Funcionalidades
-
+```
 ✅ Cadastro, edição, listagem e exclusão de **Médicos, Pacientes, Especialidades e Convênios**
 ✅ Agendamento, remarcação e cancelamento de consultas
 ✅ Validações de dados com mensagens de erro amigáveis
@@ -24,7 +24,7 @@ A aplicação permite gerenciar:
 ✅ Backend robusto com **Spring Boot + JPA + Hibernate**
 ✅ Conexão com banco de dados relacional (H2/MySQL)
 ✅ Documentação da API com **Swagger/OpenAPI**
-
+```
 ---
 
 ## 📘 Casos de Uso
