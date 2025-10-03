@@ -14,16 +14,51 @@ A aplicação permite gerenciar:
 
 ## 🚀 Funcionalidades
 
-✅ Cadastro, edição, listagem e exclusão de **Médicos, Pacientes, Especialidades e Convênios**  
-✅ Agendamento, remarcação e cancelamento de consultas  
-✅ Validações de dados com mensagens de erro amigáveis  
-✅ Layout com **Glassmorphism** para uma interface moderna e responsiva  
-✅ Navegação entre páginas para cada módulo do sistema  
-✅ Paginação na listagem de registros  
-✅ Máscaras para campos (ex.: telefone) e validação de e-mail  
-✅ Backend robusto com **Spring Boot + JPA + Hibernate**  
-✅ Conexão com banco de dados relacional (H2/MySQL)  
+✅ Cadastro, edição, listagem e exclusão de **Médicos, Pacientes, Especialidades e Convênios**
+✅ Agendamento, remarcação e cancelamento de consultas
+✅ Validações de dados com mensagens de erro amigáveis
+✅ Layout com **Glassmorphism** para uma interface moderna e responsiva
+✅ Navegação entre páginas para cada módulo do sistema
+✅ Paginação na listagem de registros
+✅ Máscaras para campos (ex.: telefone) e validação de e-mail
+✅ Backend robusto com **Spring Boot + JPA + Hibernate**
+✅ Conexão com banco de dados relacional (H2/MySQL)
 ✅ Documentação da API com **Swagger/OpenAPI**
+
+---
+
+## 📘 Casos de Uso
+
+1. **Agendar consulta**
+   - Usuário acessa a tela de agendamentos e seleciona um paciente cadastrado.
+   - Define o médico, data, horário e especialidade desejada.
+   - Sistema valida conflitos de horário e confirma o agendamento.
+
+2. **Remarcar consulta**
+   - Usuário busca um agendamento existente na listagem.
+   - Altera data e horário conforme disponibilidade do profissional.
+   - Sistema atualiza o registro e notifica o sucesso da operação.
+
+3. **Cancelar consulta**
+   - Usuário seleciona o agendamento desejado e solicita cancelamento.
+   - Sistema registra o status como cancelado e libera o horário na agenda.
+
+4. **Cadastrar novo paciente**
+   - Usuário abre a tela de pacientes e preenche dados pessoais e convênio.
+   - Sistema valida CPF, e-mail e demais informações obrigatórias.
+   - Em caso de sucesso, o paciente fica disponível para novos agendamentos.
+
+5. **Gerenciar médicos e especialidades**
+   - Usuário registra novos profissionais vinculando suas especialidades.
+   - Pode editar ou inativar médicos conforme necessidade da clínica.
+   - Especialidades podem ser criadas, atualizadas ou removidas para manter a base alinhada à oferta de serviços.
+
+6. **Administrar convênios**
+   - Usuário cadastra convênios aceitos e define dados de contato e cobertura.
+   - Sistema permite edição e exclusão para manter a lista sempre atualizada.
+   - Pacientes podem ser associados aos convênios disponíveis durante o cadastro ou edição.
+
+Esses casos de uso contemplam as principais jornadas do sistema, garantindo o gerenciamento completo do ciclo de vida das consultas médicas.
 
 ---
 
