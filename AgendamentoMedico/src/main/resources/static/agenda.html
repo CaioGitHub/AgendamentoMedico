@@ -29,6 +29,8 @@
             <h2>Agendar Consulta</h2>
 
             <form id="agendaForm">
+                <input type="hidden" id="agendamentoId">
+
                 <div class="form-group">
                     <label for="paciente">Paciente</label>
                     <select id="paciente" required>
@@ -46,7 +48,7 @@
                 <div class="form-group">
                     <label for="tipoConsulta">Tipo de Consulta</label>
                     <select id="tipoConsulta" required>
-                        <option value="PRESENCIAL" selected>Presencial</option>
+                        <option value="PRESENCIAL">Presencial</option>
                         <option value="REMOTO">Remoto</option>
                     </select>
                 </div>
@@ -56,7 +58,10 @@
                     <input type="datetime-local" id="dataHora" required>
                 </div>
 
-                <button type="submit" id="btnAgendar" class="btn-primary">Agendar</button>
+                <div class="form-actions">
+                    <button type="submit" id="btnAgendar" class="btn-primary">Agendar</button>
+                    <button type="button" id="btnCancelarEdicao" class="btn-secondary hidden">Cancelar edição</button>
+                </div>
             </form>
         </div>
     </main>
