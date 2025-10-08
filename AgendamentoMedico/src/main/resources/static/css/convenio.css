@@ -142,6 +142,24 @@ input::placeholder {
     background: linear-gradient(45deg, #00f2fe, #4facfe);
 }
 
+.btn-secondary {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.3);
+}
+
 .pager {
     margin-top: 1rem;
     display: flex;
@@ -168,4 +186,20 @@ input::placeholder {
     color: #ddd;
     font-size: 0.9rem;
     margin-top: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.form-actions .btn-primary,
+.form-actions .btn-secondary {
+    width: auto;
+    flex: 1;
+}
+
+.hidden {
+    display: none !important;
 }

@@ -11,7 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
   carregarMedicos();
   carregarAgendamentos();
 
-  document.getElementById('btnAgendar').addEventListener('click', agendarConsulta);
+  const form = document.getElementById('agendaForm');
+  if (form) {
+    form.addEventListener('submit', agendarConsulta);
+  }
+
   document.getElementById('prevPage').addEventListener('click', () => mudarPagina(-1));
   document.getElementById('nextPage').addEventListener('click', () => mudarPagina(1));
 });
@@ -167,13 +171,17 @@ function agendarConsulta(event) {
     })
     .then(() => {
       alert('Consulta agendada com sucesso!');
-      document.getElementById('paciente').value = '';
-      document.getElementById('medico').value = '';
-      document.getElementById('tipoConsulta').value = 'PRESENCIAL';
-      document.getElementById('dataHora').value = '';
+      resetFormularioAgenda();
       carregarAgendamentos();
     })
     .catch(err => {
       alert(err.message || 'Erro ao agendar consulta.');
     });
+}
+
+function resetFormularioAgenda() {
+  const form = document.getElementById('agendaForm');
+  if (form) {
+    form.reset();
+  }
 }

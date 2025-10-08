@@ -2,11 +2,21 @@ const API_URL = '/api/convenios';
 let currentPage = 1;
 const pageSize = 5;
 let convenios = [];
+let convenioEmEdicaoId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarConvenios();
 
-    document.getElementById('btnSalvar').addEventListener('click', salvarConvenio);
+    const form = document.getElementById('convenioForm');
+    if (form) {
+        form.addEventListener('submit', salvarConvenio);
+    }
+
+    const cancelarBtn = document.getElementById('btnCancelar');
+    if (cancelarBtn) {
+        cancelarBtn.addEventListener('click', cancelarEdicaoConvenio);
+    }
+
     document.getElementById('prevPage').addEventListener('click', () => mudarPagina(-1));
     document.getElementById('nextPage').addEventListener('click', () => mudarPagina(1));
 
@@ -79,8 +89,10 @@ function mudarPagina(delta) {
     renderizarLista();
 }
 
-async function salvarConvenio() {
-    const id = document.getElementById('idConvenio').value;
+async function salvarConvenio(event) {
+    event.preventDefault();
+
+    const id = convenioEmEdicaoId;
     const nome = document.getElementById('nomeConvenio').value.trim();
     const cobertura = document.getElementById('coberturaConvenio').value.trim();
     let telefoneContato = document.getElementById('telefoneConvenio').value.replace(/\D/g, '');
@@ -107,28 +119,32 @@ async function salvarConvenio() {
             });
         }
 
-        limparFormulario();
+        alert(id ? 'Convênio atualizado com sucesso!' : 'Convênio salvo com sucesso!');
+        cancelarEdicaoConvenio();
         await carregarConvenios();
-        alert('Convênio salvo com sucesso!');
 
     } catch (error) {
         console.error(error);
         alert('Erro ao salvar o convênio!');
+        if (convenioEmEdicaoId) {
+            cancelarEdicaoConvenio();
+        } else {
+            resetFormularioConvenio();
+        }
     }
 }
 
 function editar(id, nome, cobertura, telefoneContato) {
+    convenioEmEdicaoId = id;
+
+    document.getElementById('formTitle').textContent = 'Editar Convênio';
+    document.getElementById('btnSalvar').textContent = 'Atualizar Convênio';
+    document.getElementById('btnCancelar').classList.remove('hidden');
+
     document.getElementById('idConvenio').value = id;
     document.getElementById('nomeConvenio').value = nome;
     document.getElementById('coberturaConvenio').value = cobertura;
-    document.getElementById('telefoneConvenio').value = telefoneContato;
-}
-
-function limparFormulario() {
-    document.getElementById('idConvenio').value = '';
-    document.getElementById('nomeConvenio').value = '';
-    document.getElementById('coberturaConvenio').value = '';
-    document.getElementById('telefoneConvenio').value = '';
+    document.getElementById('telefoneConvenio').value = telefoneContato || '';
 }
 
 async function deletarConvenio(id) {
@@ -142,4 +158,22 @@ async function deletarConvenio(id) {
         console.error(error);
         alert('Erro ao excluir o convênio!');
     }
+}
+
+function resetFormularioConvenio() {
+    const form = document.getElementById('convenioForm');
+    if (form) {
+        form.reset();
+    }
+    document.getElementById('idConvenio').value = '';
+}
+
+function cancelarEdicaoConvenio() {
+    convenioEmEdicaoId = null;
+
+    document.getElementById('formTitle').textContent = 'Novo Convênio';
+    document.getElementById('btnSalvar').textContent = 'Salvar Convênio';
+    document.getElementById('btnCancelar').classList.add('hidden');
+
+    resetFormularioConvenio();
 }

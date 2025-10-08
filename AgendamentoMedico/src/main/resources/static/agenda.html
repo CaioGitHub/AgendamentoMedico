@@ -28,34 +28,36 @@
         <div class="glass-card form-card">
             <h2>Agendar Consulta</h2>
 
-            <div class="form-group">
-                <label for="paciente">Paciente</label>
-                <select id="paciente" required>
-                    <option value="">Selecione um paciente</option>
-                </select>
-            </div>
+            <form id="agendaForm">
+                <div class="form-group">
+                    <label for="paciente">Paciente</label>
+                    <select id="paciente" required>
+                        <option value="">Selecione um paciente</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="medico">Médico</label>
-                <select id="medico" required>
-                    <option value="">Selecione um médico</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="medico">Médico</label>
+                    <select id="medico" required>
+                        <option value="">Selecione um médico</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="tipoConsulta">Tipo de Consulta</label>
-                <select id="tipoConsulta" required>
-                    <option value="PRESENCIAL">Presencial</option>
-                    <option value="REMOTO">Remoto</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="tipoConsulta">Tipo de Consulta</label>
+                    <select id="tipoConsulta" required>
+                        <option value="PRESENCIAL" selected>Presencial</option>
+                        <option value="REMOTO">Remoto</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="dataHora">Data e Hora</label>
-                <input type="datetime-local" id="dataHora" required>
-            </div>
+                <div class="form-group">
+                    <label for="dataHora">Data e Hora</label>
+                    <input type="datetime-local" id="dataHora" required>
+                </div>
 
-            <button id="btnAgendar" class="btn-primary">Agendar</button>
+                <button type="submit" id="btnAgendar" class="btn-primary">Agendar</button>
+            </form>
         </div>
     </main>
 

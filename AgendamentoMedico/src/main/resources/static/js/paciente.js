@@ -4,12 +4,22 @@ const API_CONVENIOS = '/api/convenios';
 let pacientes = [];
 let paginaAtual = 1;
 const itensPorPagina = 10;
+let pacienteEmEdicaoId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarPacientes();
     carregarConvenios();
 
-    document.getElementById('btnSalvar').addEventListener('click', salvarPaciente);
+    const form = document.getElementById('pacienteForm');
+    if (form) {
+        form.addEventListener('submit', salvarPaciente);
+    }
+
+    const cancelarBtn = document.getElementById('btnCancelar');
+    if (cancelarBtn) {
+        cancelarBtn.addEventListener('click', cancelarEdicaoPaciente);
+    }
+
     document.getElementById('prevPage').addEventListener('click', () => mudarPagina(-1));
     document.getElementById('nextPage').addEventListener('click', () => mudarPagina(1));
 
@@ -83,8 +93,10 @@ function mudarPagina(direcao) {
     }
 }
 
-async function salvarPaciente() {
-    const id = document.getElementById('idPaciente').value;
+async function salvarPaciente(event) {
+    event.preventDefault();
+
+    const id = pacienteEmEdicaoId;
     const nome = document.getElementById('nomePaciente').value.trim();
     const email = document.getElementById('emailPaciente').value.trim();
     const telefone = document.getElementById('telefonePaciente').value.replace(/\D/g, '');
@@ -119,13 +131,18 @@ async function salvarPaciente() {
             });
         }
 
-        alert('Paciente salvo com sucesso!');
-        limparFormulario();
+        alert(id ? 'Paciente atualizado com sucesso!' : 'Paciente salvo com sucesso!');
+        cancelarEdicaoPaciente();
         carregarPacientes();
 
     } catch (error) {
         console.error(error);
         alert('Erro ao salvar paciente!');
+        if (pacienteEmEdicaoId) {
+            cancelarEdicaoPaciente();
+        } else {
+            resetFormularioPaciente();
+        }
     }
 }
 
@@ -133,12 +150,7 @@ function editar(id) {
     const paciente = pacientes.find(p => p.id === id);
     if (!paciente) return;
 
-    document.getElementById('idPaciente').value = paciente.id;
-    document.getElementById('nomePaciente').value = paciente.nome;
-    document.getElementById('emailPaciente').value = paciente.email;
-    document.getElementById('telefonePaciente').value = paciente.telefone;
-    document.getElementById('dataNascimentoPaciente').value = paciente.dataNascimento;
-    document.getElementById('convenioPaciente').value = paciente.convenio ? paciente.convenio.id : '';
+    iniciarEdicaoPaciente(paciente);
 }
 
 async function deletarPaciente(id) {
@@ -154,13 +166,37 @@ async function deletarPaciente(id) {
     }
 }
 
-function limparFormulario() {
+function iniciarEdicaoPaciente(paciente) {
+    pacienteEmEdicaoId = paciente.id;
+
+    document.getElementById('formTitle').textContent = 'Editar Paciente';
+    document.getElementById('btnSalvar').textContent = 'Atualizar Paciente';
+    document.getElementById('btnCancelar').classList.remove('hidden');
+
+    document.getElementById('idPaciente').value = paciente.id;
+    document.getElementById('nomePaciente').value = paciente.nome || '';
+    document.getElementById('emailPaciente').value = paciente.email || '';
+    document.getElementById('telefonePaciente').value = paciente.telefone || '';
+    document.getElementById('dataNascimentoPaciente').value = paciente.dataNascimento || '';
+    document.getElementById('convenioPaciente').value = paciente.convenio ? paciente.convenio.id : '';
+}
+
+function resetFormularioPaciente() {
+    const form = document.getElementById('pacienteForm');
+    if (form) {
+        form.reset();
+    }
     document.getElementById('idPaciente').value = '';
-    document.getElementById('nomePaciente').value = '';
-    document.getElementById('emailPaciente').value = '';
-    document.getElementById('telefonePaciente').value = '';
-    document.getElementById('dataNascimentoPaciente').value = '';
-    document.getElementById('convenioPaciente').value = '';
+}
+
+function cancelarEdicaoPaciente() {
+    pacienteEmEdicaoId = null;
+
+    document.getElementById('formTitle').textContent = 'Novo Paciente';
+    document.getElementById('btnSalvar').textContent = 'Salvar Paciente';
+    document.getElementById('btnCancelar').classList.add('hidden');
+
+    resetFormularioPaciente();
 }
 
 function aplicarMascaraTelefone(event) {
