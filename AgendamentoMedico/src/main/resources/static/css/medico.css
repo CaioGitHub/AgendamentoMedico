@@ -68,6 +68,19 @@ h2 {
     padding: 1rem;
     margin-bottom: 1rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.medico-info p {
+    margin-bottom: 0.25rem;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 
@@ -91,6 +104,20 @@ h2 {
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-danger {
+    background: rgba(255, 87, 87, 0.85);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: rgba(255, 40, 40, 0.95);
 }
 
 
@@ -139,7 +166,6 @@ input::placeholder {
 
 
 .btn-primary {
-    width: 100%;
     padding: 0.9rem;
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     border: none;
@@ -155,6 +181,26 @@ input::placeholder {
 .btn-primary:hover {
     transform: translateY(-2px);
     background: linear-gradient(45deg, #00f2fe, #4facfe);
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.form-actions .btn-primary {
+    flex: 1;
+    min-width: 180px;
+}
+
+.form-actions .btn-secondary {
+    padding: 0.75rem 1rem;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
