@@ -67,13 +67,13 @@ public class AgendaController {
     @ApiResponse(responseCode = "200", description = "Agendamento remarcado com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
-    public ResponseEntity<Agenda> remarcar(@PathVariable Long id,
-                                           @RequestParam String novaDataHora,
-                                           @RequestParam TipoConsulta tipoConsulta) {
+    public ResponseEntity<AgendamentoResponseDTO> remarcar(@PathVariable Long id,
+                                                           @RequestParam String novaDataHora,
+                                                           @RequestParam TipoConsulta tipoConsulta) {
 
         LocalDateTime data = LocalDateTime.parse(novaDataHora);
         Agenda agendamento = service.remarcar(id, data, tipoConsulta);
-        return ResponseEntity.ok(agendamento);
+        return ResponseEntity.ok(mapper.toResponse(agendamento));
     }
 
     @PatchMapping("/{id}/cancelar")
@@ -81,8 +81,9 @@ public class AgendaController {
             description = "Marca o agendamento como cancelado sem removê-lo do banco de dados.")
     @ApiResponse(responseCode = "200", description = "Agendamento cancelado com sucesso")
     @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
-    public ResponseEntity<Agenda> cancelar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.cancelar(id));
+    public ResponseEntity<AgendamentoResponseDTO> cancelar(@PathVariable Long id) {
+        Agenda agenda = service.cancelar(id);
+        return ResponseEntity.ok(mapper.toResponse(agenda));
     }
 
     @DeleteMapping("/{id}")
