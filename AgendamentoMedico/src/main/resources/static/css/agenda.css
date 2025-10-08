@@ -163,6 +163,19 @@ input[type="datetime-local"] {
     text-overflow: ellipsis;
 }
 
+.list-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.list li .status {
+    max-width: none;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: initial;
+}
+
 .btn-action {
     margin-left: 0.5rem;
     padding: 0.4rem 0.7rem;
@@ -177,6 +190,45 @@ input[type="datetime-local"] {
 
 .btn-action:hover {
     background: rgba(255,255,255,0.35);
+}
+
+.btn-action-danger {
+    background: rgba(255, 99, 132, 0.35);
+}
+
+.btn-action-danger:hover {
+    background: rgba(255, 99, 132, 0.5);
+}
+
+.btn-action:disabled,
+.btn-action[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.status-agendada {
+    background: rgba(79, 175, 254, 0.2);
+    color: #4facfe;
+}
+
+.status-cancelada {
+    background: rgba(255, 99, 132, 0.25);
+    color: #ff8799;
+}
+
+.status-concluida {
+    background: rgba(58, 213, 176, 0.25);
+    color: #70f0c3;
 }
 
 .pager {

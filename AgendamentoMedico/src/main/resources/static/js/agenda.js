@@ -117,25 +117,43 @@ function exibirAgendamentos() {
   pagina.forEach(a => {
     const li = document.createElement('li');
     const info = document.createElement('div');
+    const status = (a.status || 'AGENDADA').toUpperCase();
+    const statusClasse = obterClasseStatus(status);
+    const statusTexto = traduzirStatus(status);
+
     info.innerHTML = `
       <div>
         <strong>${a.pacienteNome}</strong> - ${a.medicoNome}<br>
         <small>${formatarDataParaLista(a.dataHora)}</small> |
-        <em>${a.tipoConsulta}</em>${a.status ? ` | <span class="status">${a.status}</span>` : ''}
+        <em>${a.tipoConsulta}</em> | <span class="status ${statusClasse}">${statusTexto}</span>
       </div>
     `;
 
     const actions = document.createElement('div');
-    const editarBtn = document.createElement('button');
-    editarBtn.type = 'button';
-    editarBtn.className = 'btn-action';
-    editarBtn.textContent = 'Editar';
-    editarBtn.addEventListener('click', () => prepararEdicao(a));
+    actions.className = 'list-actions';
 
-    actions.appendChild(editarBtn);
+    if (status !== 'CANCELADA') {
+      const editarBtn = document.createElement('button');
+      editarBtn.type = 'button';
+      editarBtn.className = 'btn-action';
+      editarBtn.textContent = 'Editar';
+      editarBtn.addEventListener('click', () => prepararEdicao(a));
+      actions.appendChild(editarBtn);
+    }
+
+    if (status === 'AGENDADA') {
+      const cancelarBtn = document.createElement('button');
+      cancelarBtn.type = 'button';
+      cancelarBtn.className = 'btn-action btn-action-danger';
+      cancelarBtn.textContent = 'Cancelar';
+      cancelarBtn.addEventListener('click', () => cancelarAgendamento(a.id));
+      actions.appendChild(cancelarBtn);
+    }
 
     li.appendChild(info);
-    li.appendChild(actions);
+    if (actions.children.length) {
+      li.appendChild(actions);
+    }
     lista.appendChild(li);
   });
 
@@ -285,4 +303,46 @@ function formatarDataParaInput(dataHora) {
   const timezoneOffset = data.getTimezoneOffset() * 60000;
   const localISOTime = new Date(data.getTime() - timezoneOffset).toISOString();
   return localISOTime.slice(0, 16);
+}
+
+function cancelarAgendamento(id) {
+  if (!id) return;
+
+  const confirmacao = confirm('Tem certeza de que deseja cancelar este agendamento?');
+  if (!confirmacao) {
+    return;
+  }
+
+  fetch(`${API_AGENDAS}/${id}/cancelar`, {
+    method: 'PATCH'
+  })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(err => Promise.reject(err));
+      }
+      return res.json();
+    })
+    .then(() => {
+      alert('Agendamento cancelado com sucesso!');
+      resetFormulario();
+      carregarAgendamentos();
+    })
+    .catch(err => {
+      alert(err.message || 'Erro ao cancelar agendamento.');
+    });
+}
+
+function obterClasseStatus(status) {
+  if (!status) return '';
+  return `status-${status.toLowerCase()}`;
+}
+
+function traduzirStatus(status) {
+  const mapa = {
+    AGENDADA: 'Agendada',
+    CANCELADA: 'Cancelada',
+    CONCLUIDA: 'Concluída'
+  };
+
+  return mapa[status] || status || '';
 }
