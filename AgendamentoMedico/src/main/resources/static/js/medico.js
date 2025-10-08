@@ -194,7 +194,14 @@ function salvarMedico(event) {
       cancelarEdicao();
       carregarMedicos();
     })
-    .catch(err => alert(err.message));
+    .catch(err => {
+      alert(err.message);
+      if (medicoEmEdicaoId) {
+        cancelarEdicao();
+      } else {
+        resetFormularioMedico();
+      }
+    });
 }
 
 function iniciarEdicao(medico) {
@@ -222,18 +229,27 @@ function selecionarEspecialidades(select, nomesEspecialidades) {
   });
 }
 
+function resetFormularioMedico() {
+  const form = document.getElementById('medicoForm');
+  if (form) {
+    form.reset();
+  }
+
+  const select = document.getElementById('especialidades');
+  if (select) {
+    Array.from(select.options).forEach(option => {
+      option.selected = false;
+    });
+  }
+}
+
 function cancelarEdicao() {
   medicoEmEdicaoId = null;
   document.getElementById('formTitle').textContent = 'Novo Médico';
   document.getElementById('submitButton').textContent = 'Salvar Médico';
   document.getElementById('cancelarEdicao').classList.add('hidden');
 
-  const form = document.getElementById('medicoForm');
-  form.reset();
-  const select = document.getElementById('especialidades');
-  Array.from(select.options).forEach(option => {
-    option.selected = false;
-  });
+  resetFormularioMedico();
 }
 
 function excluirMedico(id) {
