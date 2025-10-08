@@ -107,6 +107,35 @@ input[type="datetime-local"] {
     background: linear-gradient(45deg, #00f2fe, #4facfe);
 }
 
+.btn-secondary {
+    width: 100%;
+    padding: 0.9rem;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.3);
+}
+
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
 .list {
     list-style: none;
     margin-top: 1rem;
@@ -122,6 +151,7 @@ input[type="datetime-local"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
     word-break: break-word;
 }
 
