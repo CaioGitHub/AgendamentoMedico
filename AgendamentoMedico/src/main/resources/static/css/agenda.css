@@ -116,136 +116,37 @@ input[type="datetime-local"] {
 
 .list li {
     background: rgba(255,255,255,0.1);
-    margin-bottom: 0.8rem;
-    padding: 1rem;
-    border-radius: 16px;
+    margin-bottom: 0.6rem;
+    padding: 0.7rem;
+    border-radius: 8px;
     display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
+    justify-content: space-between;
+    align-items: center;
     word-break: break-word;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
 }
 
-.agenda-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-}
-
-.agenda-paciente {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-}
-
-.agenda-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: #d9f3ff;
-}
-
-.agenda-meta span::before {
-    content: "•";
-    margin-right: 0.35rem;
-    color: rgba(255,255,255,0.3);
-}
-
-.agenda-meta span:first-child::before {
-    content: "";
-    margin-right: 0;
-}
-
-.agenda-status {
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-    background: rgba(255,255,255,0.18);
-    color: #fff;
-}
-
-.agenda-status::before {
-    content: '' !important;
-    margin: 0;
-}
-
-.agenda-status--ativo {
-    background: rgba(76, 175, 80, 0.18);
-    color: #9cffc7;
-}
-
-.agenda-status--remarcado {
-    background: rgba(79, 175, 254, 0.18);
-    color: #a7d9ff;
-}
-
-.agenda-status--cancelado {
-    background: rgba(255, 82, 82, 0.18);
-    color: #ffb0b0;
-}
-
-.agenda-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.6rem;
+.list li span {
+    font-size: 0.95rem;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .btn-action {
-    padding: 0.45rem 0.9rem;
+    margin-left: 0.5rem;
+    padding: 0.4rem 0.7rem;
     font-size: 0.85rem;
     border: none;
-    border-radius: 999px;
+    border-radius: 6px;
     cursor: pointer;
-    background: rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.2);
     color: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+    transition: background 0.3s ease;
 }
 
 .btn-action:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    background: rgba(255,255,255,0.32);
-}
-
-.btn-action:active {
-    transform: translateY(0);
-}
-
-.btn-action--primary {
-    background: linear-gradient(45deg, rgba(79,175,254,0.9), rgba(0,242,254,0.9));
-    box-shadow: 0 6px 18px rgba(79,175,254,0.35);
-}
-
-.btn-action--primary:hover {
-    background: linear-gradient(45deg, rgba(0,242,254,0.95), rgba(79,175,254,0.95));
-}
-
-.btn-action--cancel {
-    background: rgba(255, 214, 102, 0.18);
-    color: #ffe7a9;
-}
-
-.btn-action--cancel:hover {
-    background: rgba(255, 214, 102, 0.28);
-}
-
-.btn-action--danger {
-    background: rgba(255, 82, 82, 0.18);
-    color: #ffb0b0;
-}
-
-.btn-action--danger:hover {
-    background: rgba(255, 82, 82, 0.28);
+    background: rgba(255,255,255,0.35);
 }
 
 .pager {
@@ -280,16 +181,5 @@ input[type="datetime-local"] {
 @media (max-width: 900px) {
     .main-content {
         flex-direction: column;
-    }
-}
-
-@media (max-width: 600px) {
-    .agenda-actions {
-        justify-content: flex-start;
-    }
-
-    .btn-action {
-        width: 100%;
-        justify-content: center;
     }
 }
