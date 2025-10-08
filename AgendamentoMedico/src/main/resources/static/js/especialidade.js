@@ -2,11 +2,21 @@ const API_URL = '/api/especialidades';
 let currentPage = 1;
 const pageSize = 10;
 let especialidades = [];
+let especialidadeEmEdicaoId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarEspecialidades();
 
-    document.getElementById('btnSalvar').addEventListener('click', salvarEspecialidade);
+    const form = document.getElementById('especialidadeForm');
+    if (form) {
+        form.addEventListener('submit', salvarEspecialidade);
+    }
+
+    const cancelarBtn = document.getElementById('btnCancelar');
+    if (cancelarBtn) {
+        cancelarBtn.addEventListener('click', cancelarEdicaoEspecialidade);
+    }
+
     document.getElementById('prevPage').addEventListener('click', () => mudarPagina(-1));
     document.getElementById('nextPage').addEventListener('click', () => mudarPagina(1));
 });
@@ -62,8 +72,10 @@ function mudarPagina(delta) {
     renderizarLista();
 }
 
-async function salvarEspecialidade() {
-    const id = document.getElementById('idEspecialidade').value;
+async function salvarEspecialidade(event) {
+    event.preventDefault();
+
+    const id = especialidadeEmEdicaoId;
     const nome = document.getElementById('nomeEspecialidade').value.trim();
 
     if (!nome) {
@@ -88,18 +100,27 @@ async function salvarEspecialidade() {
             });
         }
 
-        document.getElementById('idEspecialidade').value = '';
-        document.getElementById('nomeEspecialidade').value = '';
+        alert(id ? 'Especialidade atualizada com sucesso!' : 'Especialidade salva com sucesso!');
+        cancelarEdicaoEspecialidade();
         await carregarEspecialidades();
-        alert('Salvo com sucesso!');
 
     } catch (error) {
         console.error(error);
         alert('Erro ao salvar a especialidade!');
+        if (especialidadeEmEdicaoId) {
+            cancelarEdicaoEspecialidade();
+        } else {
+            resetFormularioEspecialidade();
+        }
     }
 }
 
 function editar(id, nome) {
+    especialidadeEmEdicaoId = id;
+    document.getElementById('formTitle').textContent = 'Editar Especialidade';
+    document.getElementById('btnSalvar').textContent = 'Atualizar Especialidade';
+    document.getElementById('btnCancelar').classList.remove('hidden');
+
     document.getElementById('idEspecialidade').value = id;
     document.getElementById('nomeEspecialidade').value = nome;
 }
@@ -115,4 +136,22 @@ async function deletarEspecialidade(id) {
         console.error(error);
         alert('Erro ao excluir a especialidade!');
     }
+}
+
+function resetFormularioEspecialidade() {
+    const form = document.getElementById('especialidadeForm');
+    if (form) {
+        form.reset();
+    }
+    document.getElementById('idEspecialidade').value = '';
+}
+
+function cancelarEdicaoEspecialidade() {
+    especialidadeEmEdicaoId = null;
+
+    document.getElementById('formTitle').textContent = 'Nova Especialidade';
+    document.getElementById('btnSalvar').textContent = 'Salvar Especialidade';
+    document.getElementById('btnCancelar').classList.add('hidden');
+
+    resetFormularioEspecialidade();
 }

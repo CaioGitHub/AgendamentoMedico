@@ -25,19 +25,24 @@
         </div>
 
         <div class="glass-card form-card">
-            <h2>Cadastrar / Editar</h2>
+            <h2 id="formTitle">Nova Especialidade</h2>
 
-            <div class="form-group">
-                <label for="idEspecialidade">ID (somente para editar)</label>
-                <input type="number" id="idEspecialidade" placeholder="Deixe vazio para novo">
-            </div>
+            <form id="especialidadeForm">
+                <div class="form-group">
+                    <label for="idEspecialidade">ID (somente para editar)</label>
+                    <input type="text" id="idEspecialidade" placeholder="Gerado automaticamente" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="nomeEspecialidade">Nome da Especialidade</label>
-                <input type="text" id="nomeEspecialidade" placeholder="Ex.: Cardiologia">
-            </div>
+                <div class="form-group">
+                    <label for="nomeEspecialidade">Nome da Especialidade</label>
+                    <input type="text" id="nomeEspecialidade" placeholder="Ex.: Cardiologia" required>
+                </div>
 
-            <button class="btn-primary" id="btnSalvar">Salvar</button>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary" id="btnSalvar">Salvar Especialidade</button>
+                    <button type="button" class="btn-secondary hidden" id="btnCancelar">Cancelar</button>
+                </div>
+            </form>
         </div>
     </div>
 
