@@ -63,7 +63,8 @@ public class AgendaService {
         Medico medico = medicoRepository.findById(medicoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado."));
 
-        boolean ocupado = agendaRepository.existsByMedicoAndDataHora(medico, dataHora);
+        boolean ocupado = agendaRepository
+                .existsByMedicoAndDataHoraAndStatus(medico, dataHora, StatusAgenda.AGENDADA);
         if (ocupado) {
             throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
         }
@@ -95,7 +96,8 @@ public class AgendaService {
             throw new IllegalArgumentException("A nova data do agendamento não pode ser anterior à data atual.");
         }
 
-        boolean ocupado = agendaRepository.existsByMedicoAndDataHora(agenda.getMedico(), novaDataHora);
+        boolean ocupado = agendaRepository
+                .existsByMedicoAndDataHoraAndStatus(agenda.getMedico(), novaDataHora, StatusAgenda.AGENDADA);
         if (ocupado && !agenda.getDataHora().equals(novaDataHora)) {
             throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
         }

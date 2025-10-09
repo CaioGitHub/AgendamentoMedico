@@ -227,12 +227,12 @@ input[type="datetime-local"] {
 
 .status-agendada {
     background: rgba(79, 175, 254, 0.2);
-    color: #4facfe;
+    color: #188ff7;
 }
 
 .status-cancelada {
     background: rgba(255, 99, 132, 0.25);
-    color: #ff8799;
+    color: #fd4e68;
 }
 
 .status-concluida {
