@@ -210,17 +210,14 @@ function agendarConsulta(event) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   })
-    .then(res => {
-      if (!res.ok) return res.json().then(err => Promise.reject(err));
-      return res.json();
-    })
+    .then(handleApiResponse)
     .then(() => {
       alert('Consulta agendada com sucesso!');
       resetFormulario();
       carregarAgendamentos();
     })
     .catch(err => {
-      alert(err.message || 'Erro ao agendar consulta.');
+      exibirErro(err, 'Erro ao agendar consulta.');
     });
 }
 
@@ -233,17 +230,14 @@ function remarcarAgendamento(id, dataHora, tipoConsulta) {
   fetch(`${API_AGENDAS}/${id}/remarcar?${params.toString()}`, {
     method: 'PUT'
   })
-    .then(res => {
-      if (!res.ok) return res.json().then(err => Promise.reject(err));
-      return res.json();
-    })
+    .then(handleApiResponse)
     .then(() => {
       alert('Agendamento atualizado com sucesso!');
       resetFormulario();
       carregarAgendamentos();
     })
     .catch(err => {
-      alert(err.message || 'Erro ao atualizar agendamento.');
+      exibirErro(err, 'Erro ao atualizar agendamento.');
     });
 }
 
@@ -316,19 +310,14 @@ function cancelarAgendamento(id) {
   fetch(`${API_AGENDAS}/${id}/cancelar`, {
     method: 'PATCH'
   })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(err => Promise.reject(err));
-      }
-      return res.json();
-    })
+    .then(handleApiResponse)
     .then(() => {
       alert('Agendamento cancelado com sucesso!');
       resetFormulario();
       carregarAgendamentos();
     })
     .catch(err => {
-      alert(err.message || 'Erro ao cancelar agendamento.');
+      exibirErro(err, 'Erro ao cancelar agendamento.');
     });
 }
 
@@ -345,4 +334,59 @@ function traduzirStatus(status) {
   };
 
   return mapa[status] || status || '';
+}
+
+function exibirErro(err, mensagemPadrao) {
+  if (!err) {
+    alert(mensagemPadrao);
+    return;
+  }
+
+  if (typeof err === 'string' && err.trim()) {
+    alert(err);
+    return;
+  }
+
+  const mensagem = err.message || mensagemPadrao;
+  alert(mensagem);
+}
+
+async function handleApiResponse(res) {
+  if (res.ok) {
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType || res.status === 204) {
+      return null;
+    }
+
+    if (contentType.includes('application/json')) {
+      return res.json();
+    }
+
+    return res.text();
+  }
+
+  const mensagem = await extrairMensagemErro(res);
+  throw new Error(mensagem);
+}
+
+async function extrairMensagemErro(res) {
+  const texto = await res.text();
+
+  if (!texto) {
+    return `Erro ${res.status}: ${res.statusText || 'Solicitação não pôde ser processada.'}`;
+  }
+
+  try {
+    const data = JSON.parse(texto);
+    if (typeof data === 'string') {
+      return data;
+    }
+    if (data && typeof data === 'object') {
+      return data.message || data.error || data.titulo || JSON.stringify(data);
+    }
+  } catch (_) {
+    // Ignora erro de parse e usa o texto bruto
+  }
+
+  return texto;
 }

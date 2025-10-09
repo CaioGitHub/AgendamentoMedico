@@ -2,6 +2,7 @@ package com.example.AgendamentoMedico.services;
 
 import com.example.AgendamentoMedico.enums.StatusAgenda;
 import com.example.AgendamentoMedico.enums.TipoConsulta;
+import com.example.AgendamentoMedico.exceptions.BusinessException;
 import com.example.AgendamentoMedico.exceptions.ResourceNotFoundException;
 import com.example.AgendamentoMedico.models.Agenda;
 import com.example.AgendamentoMedico.models.Medico;
@@ -53,11 +54,11 @@ public class AgendaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
 
         if (paciente.getConvenio() == null) {
-            throw new IllegalArgumentException("Paciente não possui convênio vinculado.");
+            throw new BusinessException("Paciente não possui convênio vinculado.");
         }
 
         if (dataHora.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("A data do agendamento não pode ser anterior à data atual.");
+            throw new BusinessException("A data do agendamento não pode ser anterior à data atual.");
         }
 
         Medico medico = medicoRepository.findById(medicoId)
@@ -66,13 +67,13 @@ public class AgendaService {
         boolean ocupado = agendaRepository
                 .existsByMedicoAndDataHoraAndStatus(medico, dataHora, StatusAgenda.AGENDADA);
         if (ocupado) {
-            throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
+            throw new BusinessException("O médico já possui um agendamento neste horário.");
         }
 
         boolean pacienteJaAgendado = agendaRepository
                 .existsByPacienteAndDataHoraAndStatus(paciente, dataHora, StatusAgenda.AGENDADA);
         if (pacienteJaAgendado) {
-            throw new IllegalArgumentException("O paciente já possui um agendamento neste horário.");
+            throw new BusinessException("O paciente já possui um agendamento neste horário.");
         }
 
         Agenda novaAgenda = Agenda.builder()
@@ -93,19 +94,19 @@ public class AgendaService {
         Agenda agenda = buscarPorId(idAgenda);
 
         if (novaDataHora.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("A nova data do agendamento não pode ser anterior à data atual.");
+            throw new BusinessException("A nova data do agendamento não pode ser anterior à data atual.");
         }
 
         boolean ocupado = agendaRepository
                 .existsByMedicoAndDataHoraAndStatus(agenda.getMedico(), novaDataHora, StatusAgenda.AGENDADA);
         if (ocupado && !agenda.getDataHora().equals(novaDataHora)) {
-            throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
+            throw new BusinessException("O médico já possui um agendamento neste horário.");
         }
 
         boolean pacienteJaAgendado = agendaRepository
                 .existsByPacienteAndDataHoraAndStatus(agenda.getPaciente(), novaDataHora, StatusAgenda.AGENDADA);
         if (pacienteJaAgendado && !agenda.getDataHora().equals(novaDataHora)) {
-            throw new IllegalArgumentException("O paciente já possui um agendamento neste horário.");
+            throw new BusinessException("O paciente já possui um agendamento neste horário.");
         }
 
         agenda.setDataHora(novaDataHora);
