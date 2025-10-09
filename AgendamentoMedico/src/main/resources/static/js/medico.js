@@ -155,7 +155,7 @@ function renderizarMedicos(medicos) {
   nextBtn.disabled = paginaAtual >= totalPaginas - 1;
 }
 
-function salvarMedico(event) {
+async function salvarMedico(event) {
   event.preventDefault();
 
   const nome = document.getElementById('nome').value.trim();
@@ -163,6 +163,22 @@ function salvarMedico(event) {
   const endereco = document.getElementById('endereco').value.trim();
   const especialidades = Array.from(document.getElementById('especialidades').selectedOptions)
     .map(opt => parseInt(opt.value, 10));
+
+  if (!crm) {
+    alert('Informe o CRM.');
+    return;
+  }
+
+  try {
+    const crmDuplicado = await crmJaExiste(crm);
+    if (crmDuplicado) {
+      alert('Já existe um médico cadastrado com este CRM.');
+      return;
+    }
+  } catch (validacaoErro) {
+    alert(validacaoErro.message || 'Não foi possível validar o CRM. Tente novamente.');
+    return;
+  }
 
   const medico = { nome, crm, endereco, especialidades };
   if (medicoEmEdicaoId) {
@@ -274,4 +290,44 @@ function excluirMedico(id) {
       carregarMedicos();
     })
     .catch(err => alert(err.message));
+}
+
+async function crmJaExiste(crm) {
+  const crmNormalizado = crm.toLowerCase();
+
+  try {
+    const resposta = await fetch(API_MEDICOS);
+    if (!resposta.ok) {
+      throw new Error();
+    }
+
+    const dados = await resposta.json();
+    const medicos = extrairMedicosDaResposta(dados);
+
+    return medicos.some(medico => {
+      if (!medico || !medico.crm) {
+        return false;
+      }
+
+      const mesmoCrm = medico.crm.toLowerCase() === crmNormalizado;
+      const mesmoMedico = medicoEmEdicaoId && Number(medico.id) === Number(medicoEmEdicaoId);
+
+      return mesmoCrm && !mesmoMedico;
+    });
+  } catch (erro) {
+    console.error('Erro ao validar CRM:', erro);
+    throw new Error('Não foi possível validar o CRM. Tente novamente.');
+  }
+}
+
+function extrairMedicosDaResposta(dados) {
+  if (Array.isArray(dados)) {
+    return dados;
+  }
+
+  if (dados && Array.isArray(dados.content)) {
+    return dados.content;
+  }
+
+  return [];
 }
