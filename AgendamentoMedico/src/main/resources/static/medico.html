@@ -30,7 +30,16 @@
     </section>
 
     <section class="glass-card">
-        <h2 id="formTitle">Novo Médico</h2>
+        <div class="card-title">
+            <h2 id="formTitle">Novo Médico</h2>
+            <button type="button" class="endpoint-tooltip" aria-label="Informações sobre o endpoint utilizado neste formulário">
+                ?
+                <span class="tooltip-text" role="tooltip">
+                    <strong>Endpoint:</strong> POST /api/medicos<br>
+                    Envia os dados preenchidos para cadastrar ou atualizar um médico na plataforma.
+                </span>
+            </button>
+        </div>
         <form id="medicoForm">
             <div class="form-group">
                 <label for="nome">Nome do Médico</label>

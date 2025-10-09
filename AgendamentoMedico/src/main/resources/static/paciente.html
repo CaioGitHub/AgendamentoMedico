@@ -25,7 +25,16 @@
         </div>
 
         <div class="glass-card form-card">
-            <h2 id="formTitle">Novo Paciente</h2>
+            <div class="card-title">
+                <h2 id="formTitle">Novo Paciente</h2>
+                <button type="button" class="endpoint-tooltip" aria-label="Informações sobre o endpoint utilizado neste formulário">
+                    ?
+                    <span class="tooltip-text" role="tooltip">
+                        <strong>Endpoint:</strong> POST /api/pacientes<br>
+                        Registra um novo paciente ou atualiza os dados de um paciente existente.
+                    </span>
+                </button>
+            </div>
 
             <form id="pacienteForm">
                 <div class="form-group">

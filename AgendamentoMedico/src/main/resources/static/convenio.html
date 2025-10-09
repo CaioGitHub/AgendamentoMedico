@@ -25,7 +25,16 @@
         </div>
 
         <div class="glass-card form-card">
-            <h2 id="formTitle">Novo Convênio</h2>
+            <div class="card-title">
+                <h2 id="formTitle">Novo Convênio</h2>
+                <button type="button" class="endpoint-tooltip" aria-label="Informações sobre o endpoint utilizado neste formulário">
+                    ?
+                    <span class="tooltip-text" role="tooltip">
+                        <strong>Endpoint:</strong> POST /api/convenios<br>
+                        Usa os dados preenchidos para criar ou alterar um convênio disponível.
+                    </span>
+                </button>
+            </div>
 
             <form id="convenioForm">
                 <div class="form-group">
