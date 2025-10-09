@@ -1,5 +1,6 @@
 package com.example.AgendamentoMedico.repositories;
 
+import com.example.AgendamentoMedico.enums.StatusAgenda;
 import com.example.AgendamentoMedico.models.Agenda;
 import com.example.AgendamentoMedico.models.Medico;
 import com.example.AgendamentoMedico.models.Paciente;
@@ -9,5 +10,5 @@ import java.time.LocalDateTime;
 
 public interface AgendaRepository extends JpaRepository<Agenda, Long> {
     boolean existsByMedicoAndDataHora(Medico medico, LocalDateTime dataHora);
-    boolean existsByPacienteAndDataHora(Paciente paciente, LocalDateTime dataHora);
+    boolean existsByPacienteAndDataHoraAndStatus(Paciente paciente, LocalDateTime dataHora, StatusAgenda status);
 }

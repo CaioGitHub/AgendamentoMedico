@@ -68,7 +68,8 @@ public class AgendaService {
             throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
         }
 
-        boolean pacienteJaAgendado = agendaRepository.existsByPacienteAndDataHora(paciente, dataHora);
+        boolean pacienteJaAgendado = agendaRepository
+                .existsByPacienteAndDataHoraAndStatus(paciente, dataHora, StatusAgenda.AGENDADA);
         if (pacienteJaAgendado) {
             throw new IllegalArgumentException("O paciente já possui um agendamento neste horário.");
         }
@@ -99,7 +100,8 @@ public class AgendaService {
             throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
         }
 
-        boolean pacienteJaAgendado = agendaRepository.existsByPacienteAndDataHora(agenda.getPaciente(), novaDataHora);
+        boolean pacienteJaAgendado = agendaRepository
+                .existsByPacienteAndDataHoraAndStatus(agenda.getPaciente(), novaDataHora, StatusAgenda.AGENDADA);
         if (pacienteJaAgendado && !agenda.getDataHora().equals(novaDataHora)) {
             throw new IllegalArgumentException("O paciente já possui um agendamento neste horário.");
         }
