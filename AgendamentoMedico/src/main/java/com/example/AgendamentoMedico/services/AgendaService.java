@@ -56,12 +56,21 @@ public class AgendaService {
             throw new IllegalArgumentException("Paciente não possui convênio vinculado.");
         }
 
+        if (dataHora.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("A data do agendamento não pode ser anterior à data atual.");
+        }
+
         Medico medico = medicoRepository.findById(medicoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado."));
 
         boolean ocupado = agendaRepository.existsByMedicoAndDataHora(medico, dataHora);
         if (ocupado) {
             throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
+        }
+
+        boolean pacienteJaAgendado = agendaRepository.existsByPacienteAndDataHora(paciente, dataHora);
+        if (pacienteJaAgendado) {
+            throw new IllegalArgumentException("O paciente já possui um agendamento neste horário.");
         }
 
         Agenda novaAgenda = Agenda.builder()
@@ -81,9 +90,18 @@ public class AgendaService {
     public Agenda remarcar(Long idAgenda, LocalDateTime novaDataHora, TipoConsulta novoTipo) {
         Agenda agenda = buscarPorId(idAgenda);
 
+        if (novaDataHora.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("A nova data do agendamento não pode ser anterior à data atual.");
+        }
+
         boolean ocupado = agendaRepository.existsByMedicoAndDataHora(agenda.getMedico(), novaDataHora);
-        if (ocupado) {
+        if (ocupado && !agenda.getDataHora().equals(novaDataHora)) {
             throw new IllegalArgumentException("O médico já possui um agendamento neste horário.");
+        }
+
+        boolean pacienteJaAgendado = agendaRepository.existsByPacienteAndDataHora(agenda.getPaciente(), novaDataHora);
+        if (pacienteJaAgendado && !agenda.getDataHora().equals(novaDataHora)) {
+            throw new IllegalArgumentException("O paciente já possui um agendamento neste horário.");
         }
 
         agenda.setDataHora(novaDataHora);
