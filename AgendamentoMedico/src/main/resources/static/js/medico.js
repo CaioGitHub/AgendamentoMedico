@@ -294,26 +294,47 @@ function excluirMedico(id) {
 
 async function crmJaExiste(crm) {
   const crmNormalizado = crm.toLowerCase();
+  const tamanhoPaginaValidacao = itensPorPagina;
 
   try {
-    const resposta = await fetch(API_MEDICOS);
-    if (!resposta.ok) {
-      throw new Error();
-    }
+    let pagina = 0;
 
-    const dados = await resposta.json();
-    const medicos = extrairMedicosDaResposta(dados);
-
-    return medicos.some(medico => {
-      if (!medico || !medico.crm) {
-        return false;
+    while (true) {
+      const resposta = await fetch(`${API_MEDICOS}?page=${pagina}&size=${tamanhoPaginaValidacao}`);
+      if (!resposta.ok) {
+        throw new Error();
       }
 
-      const mesmoCrm = medico.crm.toLowerCase() === crmNormalizado;
-      const mesmoMedico = medicoEmEdicaoId && Number(medico.id) === Number(medicoEmEdicaoId);
+      const dados = await resposta.json();
+      const medicos = extrairMedicosDaResposta(dados);
 
-      return mesmoCrm && !mesmoMedico;
-    });
+      const crmDuplicado = medicos.some(medico => {
+        if (!medico || !medico.crm) {
+          return false;
+        }
+
+        const mesmoCrm = medico.crm.toLowerCase() === crmNormalizado;
+        const mesmoMedico = medicoEmEdicaoId && Number(medico.id) === Number(medicoEmEdicaoId);
+
+        return mesmoCrm && !mesmoMedico;
+      });
+
+      if (crmDuplicado) {
+        return true;
+      }
+
+      const totalPaginasResposta = obterTotalPaginasDaResposta(dados);
+      const ultimaPagina = totalPaginasResposta === null || pagina >= totalPaginasResposta - 1;
+      const semMedicos = !medicos.length;
+
+      if (ultimaPagina || semMedicos) {
+        break;
+      }
+
+      pagina += 1;
+    }
+
+    return false;
   } catch (erro) {
     console.error('Erro ao validar CRM:', erro);
     throw new Error('Não foi possível validar o CRM. Tente novamente.');
@@ -330,4 +351,12 @@ function extrairMedicosDaResposta(dados) {
   }
 
   return [];
+}
+
+function obterTotalPaginasDaResposta(dados) {
+  if (dados && typeof dados.totalPages === 'number') {
+    return dados.totalPages;
+  }
+
+  return null;
 }
